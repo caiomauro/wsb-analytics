@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  color: white;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.main-body {
+  background-color: #070217;
+}
+
+.custom-background-img-desktop {
+  background: url('./images/background-5.png');/* Replace 'path/to/background.jpg' with the actual path to your image */
+  background-size: cover; /* This ensures that the background image covers the entire element */
+  background-repeat: no-repeat;
+}
+
+.custom-background-img-mobile {
+  background: url('./images/background-5.png');/* Replace 'path/to/background.jpg' with the actual path to your image */
+  background-size: cover; /* This ensures that the background image covers the entire element */
+  background-repeat: no-repeat;
+  background-position: 50%,0;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}

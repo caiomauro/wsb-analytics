@@ -16,8 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from .views import generate_response
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    
+    path('api/generate-response/', generate_response, name='generate_response'),
 ]
