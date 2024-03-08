@@ -16,9 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from .views import generate_response
+from .views import StockSentimentView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path('api/generate-response/', generate_response, name='generate_response'),
+    path('api/stock-sentiments/', StockSentimentView.as_view(), name='stock_sentiment'),
 ]
