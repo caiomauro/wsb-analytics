@@ -41,7 +41,7 @@ def get_data():
     stock_sentiments = []
 
     #Number of posts to pull
-    scraped_posts = 5
+    scraped_posts = 20
 
 
     #Filter keywords
@@ -307,12 +307,9 @@ def get_data():
                 except:
                     print("Could not add text post: " + post)
 
-    sentiment = 0.000
+    #sentiment = 0.000
 
-    print("-----------------------------------------------------")
-    print("LOOPING THROUGH TEXT POSTS")
-    print("-----------------------------------------------------")
-    start = time.time()
+
     for index, value in text_posts.items():
         print("Title: ", index)
         print("-----------------------------------------------------")
@@ -326,7 +323,6 @@ def get_data():
         print(analysis)
         post_analysis.append(str(analysis))
         print()
-    end = time.time()
 
     '''
     print("-----------------------------------------------------")
@@ -342,19 +338,16 @@ def get_data():
         sentiment += score["compound"]
         print()
     '''
-    time_to_analyze = str(end - start)
     print("-----------------------------------------------------")
-    print("COLLECTED DATA SUMMARY, TTR: " + time_to_analyze)
+    print("COLLECTED DATA SUMMARY")
     print()
     print("Total posts: " + str(len(text_posts) + len(image_posts)) + "/" + str(scraped_posts))
     print()
     print("Amount of text posts: " + str(len(text_posts)))
-    print()
-    print("Amount of image posts: " + str(len(image_posts)))
     #print()
     #print("Final sentiment score: " + str(sentiment))
     print()
-    start = time.time()
+
     print("Geting parsable data:")
     if len(text_posts) > 0:
         for analysis in post_analysis:
@@ -368,12 +361,12 @@ def get_data():
                 stock_sentiments.append(string.split(","))
     else:
         print("No text or image posts to analyze")
-    print("-----------------------------------------------------")
-    print()
-    print(stock_sentiments)
-    end = time.time()
 
-    print("Time to parse: " + str(end - start))
+    for arr in stock_sentiments:
+        if len(arr) != 2:
+            stock_sentiments.remove(arr)
+            
+    print(stock_sentiments)
 
     return(stock_sentiments)
 
