@@ -41,7 +41,7 @@ def get_data():
     stock_sentiments = []
 
     #Number of posts to pull
-    scraped_posts = 20
+    scraped_posts = 5
 
 
     #Filter keywords
@@ -363,7 +363,7 @@ def get_data():
         print("No text or image posts to analyze")
 
     for arr in stock_sentiments:
-        if len(arr) != 2:
+        if len(arr) != 2 or len(arr[0]) > 5 or arr[0] =="N/A":
             stock_sentiments.remove(arr)
             
     print(stock_sentiments)

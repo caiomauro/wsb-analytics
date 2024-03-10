@@ -13,7 +13,7 @@ function Navbar() {
     };
 
     return (
-        <div className="w-[200%] sm:w-screen border-b-2 border-white/10">
+        <div className="w-full border-b-2 border-white/10">
             <div id="navbar" className="grid grid-cols-1 gap-2 sm:gap-0 sm:grid-cols-3 pt-2 pb-2">
                 <div id="logo-div" className="items-center mx-auto sm:mx-0 sm:pl-32 sm:col-span-1">
                     <img alt="logo" src="/logo.png" className="h-14 w-auto" />
