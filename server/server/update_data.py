@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
-from script import get_data
-from models import StockSentiment
+from .script import get_data
+from .models import StockSentiment
 
 class Command(BaseCommand):
     help = 'Update data every hour'

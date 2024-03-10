@@ -37,7 +37,7 @@ function AnalyticsPage(){
         data: graph_data[];
     }
 
-    const visualization = (data: Array<Array<string>>) => {
+    const visualization = (data: Array<Array<string>>, entries: number) => {
         const stock: {[key:string]:Array<string>} = {}
         const stock_sentiment_count: {[key:string]: Array<number>} ={}
         const final_data: any = []
@@ -101,10 +101,10 @@ function AnalyticsPage(){
         });
 
         console.log(final_data)
-        return(final_data);
+        return(final_data.slice(0,entries));
     }
 
-    const fetchData = (count: number) => {
+    const fetchData = (count: number, entries: number) => {
         fetch(`http://127.0.0.1:8000/api/stock-sentiments/?count=${count}`)  // Use backticks for template literals
             .then(response => {
                 if (!response.ok) {
@@ -113,7 +113,7 @@ function AnalyticsPage(){
                 return response.json();
             })
             .then(data => {
-                setData(visualization(data.stock_sentiments));
+                setData(visualization(data.stock_sentiments, entries));
             })
             .catch(error => {
                 console.error('There was a problem fetching the data:', error);
@@ -212,14 +212,13 @@ function AnalyticsPage(){
     return(
         <div className="flex flex-col w-full h-screen custom-background-img-mobile sm:custom-background-img-desktop">
             <Navbar />
-                <div id="analytics-container" className="flex flex-col h-screen w-full">
-                    <p>Test</p>
-                    
-                    <button className="text-white w-40 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" onClick={() => {fetchData(100)}}>Dropdown button</button>
-                    <div>
-                        <p>{data.toString()}</p>
+                <div id="analytics-container" className="flex flex-col h-screen w-full items-center">
+                    <div id="count-button-container" className="flex flex-row w-1/4 justify-center justify-around item-center py-2">
+                        <button className="text-white bg-white/10 hover:ring-2 hover:ring-amber-300 focus:ring-2 focus:outline-none focus:ring-amber-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center" onClick={() => {fetchData(1000,10)}}>Top 10 Stocks</button>
+                        <button className="text-white bg-white/10 hover:ring-2 hover:ring-amber-300 focus:ring-2 focus:outline-none focus:ring-amber-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center" onClick={() => {fetchData(1000,15)}}>Top 15 Stocks</button>
+                        <button className="text-white bg-white/10 hover:ring-2 hover:ring-amber-300 focus:ring-2 focus:outline-none focus:ring-amber-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center" onClick={() => {fetchData(1000,20)}}>Top 20 Stocks</button>
                     </div>
-                    <div id="count-container" className="flex flex-col h-screen w-full overflow-x-auto sm:h-4/5 sm:w-3/4 sm:mx-auto">
+                    <div id="count-container" className="flex flex-col h-screen w-full overflow-x-auto sm:h-4/5 sm:w-4/6 pl-28 sm:mx-auto border border-white/25 border-dotted">
                         {isTooLarge ? (
                             data.length > 0 && <MyResponsiveBar data={data} />
                         ) : (

@@ -41,7 +41,7 @@ def get_data():
     stock_sentiments = []
 
     #Number of posts to pull
-    scraped_posts = 5
+    scraped_posts = 10
 
 
     #Filter keywords
@@ -308,7 +308,8 @@ def get_data():
                     print("Could not add text post: " + post)
 
     #sentiment = 0.000
-
+    
+    cur_num = 1
 
     for index, value in text_posts.items():
         print("Title: ", index)
@@ -318,6 +319,8 @@ def get_data():
         #print(score)
         #sentiment += score["compound"]
         print()
+        print(str(cur_num) + "/" + str(len(text_posts)))
+        cur_num += 1
         print("Analysis: ")
         analysis = analyze_post(value, index)
         print(analysis)
@@ -348,11 +351,14 @@ def get_data():
     #print("Final sentiment score: " + str(sentiment))
     print()
 
+    cur_analysis = 1
+
     print("Geting parsable data:")
     if len(text_posts) > 0:
         for analysis in post_analysis:
             string = analysis_to_array(analysis)
-            print(string)
+            print(string + " " + str(cur_analysis) + "/" + str(len(post_analysis)))
+            cur_analysis += 1
             if ";" in string:
                 arr = string.split(";")
                 for pair in arr:
