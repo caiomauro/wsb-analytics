@@ -16,9 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from .views import StockSentimentView
+
+from .views import DateRangeStockSentimentView, StockSentimentView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path('api/stock-sentiments/', StockSentimentView.as_view(), name='stock_sentiment'),
+    path('api/stock-sentiments/range/', DateRangeStockSentimentView.as_view(), name='stock_sentiment_range')
 ]

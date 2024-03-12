@@ -21,7 +21,7 @@ function Navbar() {
                 <div id="title-div" className="flex items-center justify-center sm:col-span-1">
                     <h1 className="font-bold font-italics text-2xl">WSB ANALYTICS.</h1>
                 </div>
-                <div id="link-div" className="flex flex-col sm:flex-row items-center justify-between pl-2 pr-2 sm:pl-8 sm:pr-24 sm:col-span-1">
+                <div id="link-div" className="flex flex-col xl:flex-row items-center justify-between pl-2 pr-2 sm:pl-8 sm:pr-24 sm:col-span-1">
                     <a href="/" className={`${activePage === "/" ? "font-bold" : "font-thin"}`} onClick={() => handleSetActivePage("/")}>Home</a>
                     <a href="/analytics" className={`${activePage === "/analytics" ? "font-bold":"font-thin"}`} onClick={() => handleSetActivePage("/analytics")}>Analytics</a>
                     <a href="/data" className={`font-thin ${activePage === "/data" && "font-bold"}`} onClick={() => handleSetActivePage("/data")}>Data</a>
