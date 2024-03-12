@@ -113,28 +113,55 @@ function AnalyticsPage(){
         return(final_data.slice(0,entries));
     }
 
+    function groupDataBySegments(data: any[], days: number){
+        const segments: {[key: string]: any[]} = {}
+
+        const currentDate = new Date();
+        const currentTimestamp = currentDate.getTime();
+
+        const segmentDuration = 24 * 60 * 60 * 1000;
+
+        data.forEach(([sentiment, timestamp]) => {
+            const timestampNum = parseInt(timestamp);
+
+            const daysAgo = Math.floor((currentTimestamp - timestampNum) / (segmentDuration * days))
+            const segmentStart = currentTimestamp - (daysAgo * segmentDuration * days);
+            const segmentKey = new Date(segmentStart).toISOString().slice(0, 10);
+
+            if (!segments[segmentKey]) {
+                segments[segmentKey] = [];
+            }
+    
+            // Add data point to the segment
+            segments[segmentKey].push([sentiment, timestamp]);
+
+        })
+        return segments;
+    }
+
     const visualizationTimeline = (data: Array<Array<string>>) => {
-        const stock: Array<timeline_data> = []
+        const stock_date_sentiment: {[key:string]:Array<Array<string>>} = {}
+        const printHolder: {[key: string]: any} = {};
         console.log("This is the data", data)
+        for (let i=0; i < data.length; i++) {
+            const stock = data[i][0]
+            const sentiment = data[i][1]
+            const dateObject: Date = new Date(data[i][2]);
+            const unixTimestamp: number = dateObject.getTime();
 
-
-        for (let i=0; i < data.length; i++){
-
-            const sample: timeline_data[] = [
-                week: 1,
-                stock: string;
-                positive: number;
-                negative: number;
-                mixed: number
-                created_at: string;
-            ]
-            
-        }
-
-
-        console.log(stock);
-        return(stock);
+            if(!stock_date_sentiment[stock]) {
+                stock_date_sentiment[stock] = []
+            }
+            stock_date_sentiment[stock].push([sentiment, unixTimestamp.toString()])
         };
+        
+        Object.entries(stock_date_sentiment).forEach(([stock, data]) => {
+            printHolder[stock] = groupDataBySegments(data, 1);
+        });
+
+        console.log(printHolder);
+        return stock_date_sentiment;
+    }
 
     const fetchData = (count: number, entries: number) => {
         fetch(`http://127.0.0.1:8000/api/stock-sentiments/?count=${count}`)  // Use backticks for template literals
