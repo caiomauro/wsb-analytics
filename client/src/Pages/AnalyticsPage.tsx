@@ -9,6 +9,7 @@ function AnalyticsPage(){
     const [data, setData] = useState<graph_data[]>([]);
     const [rangeData, setRangeData] = useState<timeline_data[]>([]);
     const [isTooLarge, setIsTooLarge] = useState(false);
+    const [stock, setStock ] = useState("");
 
     useEffect(() => {
         function handleResize(){
@@ -235,10 +236,11 @@ function AnalyticsPage(){
     }
 
     const theme = {
-        labels: { text: { fontSize: 15, fill: "white" } },
+        labels: { text: { fontSize: 15, fill: "black" } },
         axis: {
-          ticks: { text: { fontSize: 13, fill: "white" }, line: { strokeWidth: 0} },
-          legend: { text: { fontSize: 15, fill: "white"} }
+          ticks: { text: { fontSize: 15, fill: "white" }, line: { strokeWidth: 0} },
+          legend: { text: { fontSize: 15, fill: "white"} },
+          domain: { line: { strokeWidth: 2, stroke: 'white'}},
         },
         legends: {
             text: { fontSize: 15, fill: "white" },
@@ -257,11 +259,12 @@ function AnalyticsPage(){
             padding={0.3}
             valueScale={{ type: 'linear' }}
             indexScale={{ type: 'band', round: true }}
-            colors={['#6AFF73', '#FF6A6A','#FFBB6A']}
+            colors={['#22ff00', '#ff0000','#ffcc00']}
             colorBy="id"
             borderColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
             axisTop={null}
             axisRight={null}
+            axisLeft={null}
             layout='vertical'
             axisBottom={{
                 tickSize: 5,
@@ -272,7 +275,6 @@ function AnalyticsPage(){
             }}
             labelSkipWidth={12}
             labelSkipHeight={12}
-            labelTextColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
             borderWidth={1}
             theme={theme}
             role="application"
@@ -297,7 +299,7 @@ function AnalyticsPage(){
             padding={0.3}
             valueScale={{ type: 'linear' }}
             indexScale={{ type: 'band', round: true }}
-            colors={['#6AFF73', '#FF6A6A','#FFBB6A']}
+            colors={['#22ff00', '#ff0000','#ffcc00']}
             colorBy="id"
             borderColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
             axisTop={null}
@@ -306,7 +308,6 @@ function AnalyticsPage(){
             layout='horizontal'
             labelSkipWidth={12}
             labelSkipHeight={12}
-            labelTextColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
             borderWidth={1}
             theme={theme}
             role="application"
@@ -331,7 +332,7 @@ function AnalyticsPage(){
             padding={0.3}
             valueScale={{ type: 'linear' }}
             indexScale={{ type: 'band', round: true }}
-            colors={['#6AFF73', '#FF6A6A','#FFBB6A']}
+            colors={['#22ff00', '#ff0000','#ffcc00']}
             colorBy="id"
             borderColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
             axisTop={null}
@@ -340,7 +341,6 @@ function AnalyticsPage(){
             layout='vertical'
             labelSkipWidth={12}
             labelSkipHeight={12}
-            labelTextColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
             borderWidth={1}
             theme={theme}
             role="application"
@@ -443,6 +443,7 @@ function AnalyticsPage(){
         
             if (runScript) {
                 fetchData(1000,10)
+                fetchDataRange("NVDA","2024-03-01",1)
                 // Append the script to the DOM element
                 container.current?.appendChild(script);
             }
@@ -459,6 +460,7 @@ function AnalyticsPage(){
             <Navbar />
                 <div id="analytics-container" className="flex flex-col h-max w-full items-center overflow-y-auto gap-2">
                     <button className="bg-blue-500 text-white p-2" onClick={()=>{fetchDataRange("NVDA","2024-03-01",1);}}>Range test</button>
+                    <p className="flex flex-col items-center indent-12 h-screen w-max sm:h-max sm:w-3/6">Our fine-tuned model employes various tactics in order to decipher hundreds of reddit posts. It carefully retrieves what stock a user is talking about as well as how they feel about that stock. View the bar graph below to view how many times a post has been mentioned and the split with the sentiments. <span className="font-bold text-blue-500 text-xl italic">Use the buttons below to view the top talked about stocks.</span> <span className="font-light italic">Please note mixed can vary from nuetral to mixed.</span></p>
                     <div id="count-button-container" className="flex flex-row w-full sm:w-2/4 justify-around item-center pt-2">
                         <button className="text-white bg-white/10 hover:ring-2 hover:ring-amber-300 focus:ring-2 focus:outline-none focus:ring-amber-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center" onClick={() => {fetchData(1000,10)}}>Top 10 Stocks</button>
                         <button className="text-white bg-white/10 hover:ring-2 hover:ring-amber-300 focus:ring-2 focus:outline-none focus:ring-amber-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center" onClick={() => {fetchData(1000,15)}}>Top 15 Stocks</button>

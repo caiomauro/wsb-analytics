@@ -1,7 +1,7 @@
 function BottomHeader(){
 
     return(
-        <div className="w-full border-t-2 border-white/10 mt-auto mb-2">
+        <div className="w-full mt-auto mb-2">
             <div id="navbar" className="grid grid-cols-1 gap-2 sm:gap-0 sm:grid-cols-3 pt-2"> {/* Use grid-cols-3 for larger screens */}
                 <div id="logo-div" className=" items-center mx-auto sm:mx-0 sm:pl-32 sm:col-span-1"> {/* Adjust padding and col-span for small screens */}
                     <p className="font-light text-sm font-italics">Made for fun, I am not responsible if you lose money :)</p>
