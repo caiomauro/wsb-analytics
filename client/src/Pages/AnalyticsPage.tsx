@@ -6,8 +6,8 @@ import Navbar from "../Components/Navbar";
 
 function AnalyticsPage(){
 
-    const [data, setData] = useState([]);
-    const [rangeData, setRangeData] = useState({});
+    const [data, setData] = useState<graph_data[]>([]);
+    const [rangeData, setRangeData] = useState<timeline_data[]>([]);
     const [isTooLarge, setIsTooLarge] = useState(false);
 
     useEffect(() => {
@@ -35,21 +35,26 @@ function AnalyticsPage(){
     }
 
     type timeline_data = {
-        week: number;
-        stock: string;
+        day: string;
         positive: number;
+        positiveColor: string;
         negative: number;
+        negativeColor: string;
         mixed: number
-        created_at: string;
+        mixedColor: string;
     }
     interface MyResponsiveBarProps {
         data: graph_data[];
     }
 
+    interface MyResponsiveTimelineBarProps {
+        data: timeline_data[];
+    }
+
     const visualization = (data: Array<Array<string>>, entries: number) => {
         const stock: {[key:string]:Array<string>} = {}
         const stock_sentiment_count: {[key:string]: Array<number>} ={}
-        const final_data: any = []
+        const final_data: any[] = []
 
         for (let i=0; i < data.length; i++){
             const key = data[i][0];
@@ -129,19 +134,33 @@ function AnalyticsPage(){
             const segmentKey = new Date(segmentStart).toISOString().slice(0, 10);
 
             if (!segments[segmentKey]) {
-                segments[segmentKey] = [];
+                segments[segmentKey] = [0,0,0];
             }
-    
-            // Add data point to the segment
-            segments[segmentKey].push([sentiment, timestamp]);
 
+            if (sentiment == 'positive')
+                {
+                    segments[segmentKey][0] = segments[segmentKey][0] + 1
+                }
+                else if (sentiment == 'negative')
+                {
+                    segments[segmentKey][1] = segments[segmentKey][1] + 1
+                }
+                else 
+                {
+                    segments[segmentKey][2] = segments[segmentKey][2] + 1
+                }
+            
+            // Add data point to the segment
+            //segments[segmentKey].push([sentiment, timestamp]);
         })
         return segments;
     }
 
-    const visualizationTimeline = (data: Array<Array<string>>) => {
+    const visualizationTimeline = (stock: string, data: Array<Array<string>>, days: number) => {
         const stock_date_sentiment: {[key:string]:Array<Array<string>>} = {}
-        const printHolder: {[key: string]: any} = {};
+        const printHolder: {[key: string]: {[date: string]: Array<number>}} = {};
+        const final_data: any[] = [] 
+
         console.log("This is the data", data)
         for (let i=0; i < data.length; i++) {
             const stock = data[i][0]
@@ -156,11 +175,30 @@ function AnalyticsPage(){
         };
         
         Object.entries(stock_date_sentiment).forEach(([stock, data]) => {
-            printHolder[stock] = groupDataBySegments(data, 1);
+            printHolder[stock] = groupDataBySegments(data, days);
+        });
+
+        Object.entries(printHolder[stock]).forEach(([date, sentiments]) => {
+
+            const stock_data: timeline_data[] = [
+                {
+                    day: date,
+                    positive: sentiments[0],
+                    positiveColor: "hsl(288, 70%, 50%)",
+                    negative: sentiments[1],
+                    negativeColor: "hsl(2, 70%, 50%))",
+                    mixed: sentiments[2],
+                    mixedColor: "hsl(323, 70%, 50%)",
+                }
+            ];
+
+            final_data.push(stock_data[0]);
         });
 
         console.log(printHolder);
-        return stock_date_sentiment;
+        console.log("Printing the parsed data for chart")
+        console.log(final_data);
+        return final_data;
     }
 
     const fetchData = (count: number, entries: number) => {
@@ -179,7 +217,7 @@ function AnalyticsPage(){
             });
     };
 
-    const fetchDataRange = (range: string) => {
+    const fetchDataRange = (stock: string, range: string, days: number) => {
         fetch(`http://127.0.0.1:8000/api/stock-sentiments/range/?starting_date=${range}`)  // Use backticks for template literals
             .then(response => {
                 if (!response.ok) {
@@ -188,7 +226,7 @@ function AnalyticsPage(){
                 return response.json();
             })
             .then(data => {
-                setRangeData(visualizationTimeline(data.stock_sentiments));
+                setRangeData(visualizationTimeline(stock,data.stock_sentiments,days));
                 console.log(rangeData);
             })
             .catch(error => {
@@ -266,6 +304,40 @@ function AnalyticsPage(){
             axisRight={null}
             axisBottom={{tickValues: 9}}
             layout='horizontal'
+            labelSkipWidth={12}
+            labelSkipHeight={12}
+            labelTextColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
+            borderWidth={1}
+            theme={theme}
+            role="application"
+            tooltip={data => {
+                return(
+                    <div className="flex flex-row bg-white p-1 px-2 rounded-md text-black">
+                        <p><span className="font-bold italic">{data.indexValue}</span>: +{data.formattedValue}  {data.id}</p>
+                    </div>
+                )
+              }}
+            ariaLabel="Nivo bar chart demo"
+            barAriaLabel={e=>e.id+": "+e.formattedValue+" in country: "+e.indexValue}
+        />
+    );
+
+    const MyResponsiveTimelineBar: React.FC<MyResponsiveTimelineBarProps> = ({ data }) => (
+        <ResponsiveBar
+            data={data}
+            keys={['positive', 'negative', 'mixed']}
+            indexBy="day"
+            margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
+            padding={0.3}
+            valueScale={{ type: 'linear' }}
+            indexScale={{ type: 'band', round: true }}
+            colors={['#6AFF73', '#FF6A6A','#FFBB6A']}
+            colorBy="id"
+            borderColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
+            axisTop={null}
+            axisRight={null}
+            axisBottom={{tickValues: 9}}
+            layout='vertical'
             labelSkipWidth={12}
             labelSkipHeight={12}
             labelTextColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
@@ -386,7 +458,7 @@ function AnalyticsPage(){
         <div className="flex flex-col w-full h-full custom-background-img-mobile sm:custom-background-img-desktop">
             <Navbar />
                 <div id="analytics-container" className="flex flex-col h-max w-full items-center overflow-y-auto gap-2">
-                    <button className="bg-blue-500 text-white p-2" onClick={()=>{fetchDataRange("2024-03-01");}}>Range test</button>
+                    <button className="bg-blue-500 text-white p-2" onClick={()=>{fetchDataRange("NVDA","2024-03-01",1);}}>Range test</button>
                     <div id="count-button-container" className="flex flex-row w-full sm:w-2/4 justify-around item-center pt-2">
                         <button className="text-white bg-white/10 hover:ring-2 hover:ring-amber-300 focus:ring-2 focus:outline-none focus:ring-amber-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center" onClick={() => {fetchData(1000,10)}}>Top 10 Stocks</button>
                         <button className="text-white bg-white/10 hover:ring-2 hover:ring-amber-300 focus:ring-2 focus:outline-none focus:ring-amber-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center" onClick={() => {fetchData(1000,15)}}>Top 15 Stocks</button>
@@ -404,6 +476,9 @@ function AnalyticsPage(){
                             <div className="tradingview-widget-container__widget"></div>
                             <div className="tradingview-widget-copyright"><a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank"><span className="blue-text">Track all markets on TradingView</span></a></div>
                         </div>
+                    </div>
+                    <div id="count-container" className="flex flex-col h-128 w-full sm:h-128 sm:w-4/6 sm:mx-auto">
+                        {rangeData.length > 0 && <MyResponsiveTimelineBar data={rangeData} />}
                     </div>
                 </div>
             <BottomHeader />
