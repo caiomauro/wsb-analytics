@@ -125,8 +125,8 @@ function HomePage(){
         <div className="flex flex-col w-full h-screen items-center custom-background-img-mobile sm:custom-background-img-desktop">
             <Navbar />
             <div id="home-container" className="flex flex-col items-center pt-12 sm:pt-36 sm:w-5/6">
-                <div id="animation-container" className="flex flex-col items-center sm:flex-row">
-                    <div className="flex flex-col items-center pb-32 sm:pb-10 sm:w-5/6">
+                <div id="animation-container" className="flex flex-col items-center sm:flex-row w-full">
+                    <div className="flex flex-col items-center pb-32 sm:pb-10 w-full">
                         <div className="flex flex-col pb-8 w-full">
                             <h1 className="text-center text-2xl pb-2">Welcome to the future of trading </h1> 
                             <h1 id="text" className="text-3xl text-center sm:text-7xl text-blue-500">Live Better</h1>
@@ -135,7 +135,7 @@ function HomePage(){
                             <button className="text-white p-2" onClick={() => {navigate("/analytics")}}>See the data </button>
                         </div>
                     </div>
-                    <div id="text-container" className="flex flex-col w-5/6 sm:w-5/6 justify-around">
+                    <div id="text-container" className="flex flex-col w-5/6 sm:w-4/6 justify-around">
                         <h1 className="pb-3 text-center text-2xl sm:text-4xl font-thin">Robust LLM fine-tuned on <span className="text-blue-500 text-3xl sm:text-5xl font-normal bg-gradient-to-r from-cyan-500 to-blue-500 text-transparent bg-clip-text">100k</span> lines of private curated data.</h1>
                         <h1 className="pb-3 text-center text-2xl sm:text-4xl font-thin">Analyzing <span className="text-blue-500 text-3xl sm:text-5xl font-normal bg-gradient-to-r from-cyan-500 to-blue-500 text-transparent bg-clip-text">thousands</span> of posts to boost your trading strategy.</h1>
                     </div>
