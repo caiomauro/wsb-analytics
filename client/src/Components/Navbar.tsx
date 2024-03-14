@@ -1,8 +1,24 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavbar } from '../Context/NavbarContext';
 
 function Navbar() {
     const { activePage, setActivePage } = useNavbar();
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [renderMobile, setRenderMobile] = useState(false);
+
+    useEffect(() => {
+        function handleResize(){
+            setRenderMobile(window.innerWidth < 1337);
+        }
+        
+        handleResize();
+
+        window.addEventListener("resize", handleResize);
+
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        }
+    }, []);
 
     useEffect(() => {
         setActivePage(window.location.pathname);
@@ -12,25 +28,47 @@ function Navbar() {
         setActivePage(page);
     };
 
+    const toggleMenu = () => {
+        setIsMenuOpen(!isMenuOpen);
+    };
+
     return (
         <div className="w-full">
-            <div id="navbar" className="grid grid-cols-1 gap-2 sm:gap-0 sm:grid-cols-3 pt-2 pb-2">
+            <div id="navbar" className="grid grid-cols-2 gap-2 sm:gap-0 sm:grid-cols-3 pt-8 sm:pt-4 pb-2">
                 <div id="logo-div" className="flex flex-col justify-start items-start mx-auto sm:mx-0 sm:pl-32 sm:col-span-1">
                     <div className="flex flex-col justify-start items-center">
-                        <img alt="logo" src="/logo.png" className="h-14 w-auto" />
-                        <p>Powered by <span className="text-green-500 font-bold text-md">AI</span></p>
+                        <h1 className="font-italics text-xl">WSB ANALYTICS.</h1>
                     </div>
                 </div>
                 <div id="title-div" className="flex items-center justify-center sm:col-span-1">
-                    <h1 className="font-italics text-3xl">WSB ANALYTICS.</h1>
+                    <p className="text-sm font-light">Powered by <span className="text-green-500 font-bold text-md">AI</span></p>
                 </div>
-                <div id="link-div" className="flex flex-col xl:flex-row items-center justify-between pl-2 pr-2 sm:pl-8 sm:pr-24 sm:col-span-1">
+                {renderMobile ? (
+                <div className="flex flex-row w-screen pl-2 pt-2">
+                    <div className="sm:hidden flex justify-start">
+                        <button onClick={toggleMenu} className="text-gray-600 focus:outline-none">
+                            <svg className="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="white">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18l6-6-6-6"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <div id="link-div" className={`flex flex-row w-full xl:flex-row justify-between p-2 pr-4 sm:pl-8 sm:pr-24 sm:col-span-1 ${isMenuOpen ? 'block' : 'hidden'}`}>
+                        <a href="/" className={`${activePage === "/" ? "font-bold" : "font-thin"}`} onClick={() => handleSetActivePage("/")}>Home</a>
+                        <a href="/analytics" className={`${activePage === "/analytics" ? "font-bold":"font-thin"}`} onClick={() => handleSetActivePage("/analytics")}>Analytics</a>
+                        <a href="/data" className={`font-thin ${activePage === "/data" && "font-bold"}`} onClick={() => handleSetActivePage("/data")}>Data</a>
+                        <a href="/how-it-works" className={`font-thin ${activePage === "/how-it-works" && "font-bold"}`} onClick={() => handleSetActivePage("/how-it-works")}>How it works</a>
+                        <a href="/github" className={`font-thin ${activePage === "/github" && "font-bold"}`} onClick={() => handleSetActivePage("/github")}>Github</a>
+                    </div>
+                </div>
+                ):( 
+                <div id="link-div" className="flex flex-col xl:flex-row justify-between pl-2 pr-2 sm:pl-8 sm:pr-24 sm:col-span-1">
                     <a href="/" className={`${activePage === "/" ? "font-bold" : "font-thin"}`} onClick={() => handleSetActivePage("/")}>Home</a>
                     <a href="/analytics" className={`${activePage === "/analytics" ? "font-bold":"font-thin"}`} onClick={() => handleSetActivePage("/analytics")}>Analytics</a>
                     <a href="/data" className={`font-thin ${activePage === "/data" && "font-bold"}`} onClick={() => handleSetActivePage("/data")}>Data</a>
                     <a href="/how-it-works" className={`font-thin ${activePage === "/how-it-works" && "font-bold"}`} onClick={() => handleSetActivePage("/how-it-works")}>How it works</a>
                     <a href="/github" className={`font-thin ${activePage === "/github" && "font-bold"}`} onClick={() => handleSetActivePage("/github")}>Github</a>
                 </div>
+                )}
             </div>
         </div>
     );

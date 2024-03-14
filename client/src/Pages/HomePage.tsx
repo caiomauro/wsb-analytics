@@ -1,11 +1,12 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import BottomHeader from "../Components/BottomHeader";
 import Navbar from "../Components/Navbar";
-import { Navigate } from "react-router-dom";
 
 
 function HomePage(){
     const [data, setData] = useState([]);
+    const navigate = useNavigate();
 
     const fetchData = (count: number) => {
         fetch(`http://127.0.0.1:8000/api/stock-sentiments/?count=${count}`)  // Use backticks for template literals
@@ -121,23 +122,24 @@ function HomePage(){
     }, []);
 
     return(
-        <div className="flex flex-col w-full h-screen custom-background-img-mobile sm:custom-background-img-desktop">
+        <div className="flex flex-col w-full h-screen items-center custom-background-img-mobile sm:custom-background-img-desktop">
             <Navbar />
-            <div id="home-container" className="flex flex-col items-center pt-36">
-            <div id="animation-container" className="flex flex-row justify-center mx-10 ">
-                <div className="flex flex-col items-center w-3/6">
-                    <h1 className="text-2xl pb-2">Welcome to the future of trading </h1> <h1 id="text" className="text-7xl pb-32 text-blue-500">Live Better</h1>
-                    <div id="button-container">
-                        <a className="bg-blue-800 hover:bg-blue-500 active:bg-blue-500 text-2xl text-white p-3 rounded-2xl drop-shadow-2xl" href="/analytics">See the data</a>
+            <div id="home-container" className="flex flex-col items-center pt-12 sm:pt-36 sm:w-5/6">
+                <div id="animation-container" className="flex flex-col items-center sm:flex-row">
+                    <div className="flex flex-col items-center pb-32 sm:pb-10 sm:w-5/6">
+                        <div className="flex flex-col pb-8 w-full">
+                            <h1 className="text-center text-2xl pb-2">Welcome to the future of trading </h1> 
+                            <h1 id="text" className="text-3xl text-center sm:text-7xl text-blue-500">Live Better</h1>
+                        </div>
+                        <div id="button-container" className=" text-3xl bg-gradient-to-r from-cyan-500 to-blue-500 hover:ring-1 hover:ring-white rounded-md shadow-lg shadow-blue-500/50">
+                            <button className="text-white p-2" onClick={() => {navigate("/analytics")}}>See the data </button>
+                        </div>
+                    </div>
+                    <div id="text-container" className="flex flex-col w-5/6 sm:w-5/6 justify-around">
+                        <h1 className="pb-3 text-center text-2xl sm:text-4xl font-thin">Robust LLM fine-tuned on <span className="text-blue-500 text-3xl sm:text-5xl font-normal bg-gradient-to-r from-cyan-500 to-blue-500 text-transparent bg-clip-text">100k</span> lines of private curated data.</h1>
+                        <h1 className="pb-3 text-center text-2xl sm:text-4xl font-thin">Analyzing <span className="text-blue-500 text-3xl sm:text-5xl font-normal bg-gradient-to-r from-cyan-500 to-blue-500 text-transparent bg-clip-text">thousands</span> of posts to boost your trading strategy.</h1>
                     </div>
                 </div>
-                <div id="text-container" className="w-5/6 sm:w-2/6">
-                    <h1 className="font-bold italic text-2xl">Analysis.</h1>
-                    <h1 className="font-light text-justify pb-3 text-xl indent-12">For <span className="text-blue-500 text-9xl">big</span> ballas</h1>
-                    <h1 className="font-bold italic text-2xl text-blue-500">Visualization.</h1>
-                    <h1 className="font-light text-justify text-xl indent-12">Elevate your trading strategy with WSB Analytics, where intuitive graphs provide effortless data interpretation. Our cutting-edge tools harness the power of a state-of-the-art Language Model (LLM), finely tuned for unparalleled accuracy. Dive into detailed visual representations that streamline your analysis, allowing you to grasp complex market trends with ease. With WSB Analytics, stay ahead of the curve and make informed investment decisions backed by robust data and advanced technology.</h1>
-                </div>
-            </div>
             </div>
             <BottomHeader />
         </div>
