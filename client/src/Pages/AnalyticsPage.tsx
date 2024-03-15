@@ -10,6 +10,7 @@ function AnalyticsPage(){
     const [rangeData, setRangeData] = useState<timeline_data[]>([]);
     const [isTooLarge, setIsTooLarge] = useState(false);
     const [stock, setStock ] = useState("");
+    const [ allStocks, setAllStocks ] = useState(new Set());
 
     useEffect(() => {
         function handleResize(){
@@ -211,8 +212,15 @@ function AnalyticsPage(){
                 return response.json();
             })
             .then(data => {
+                const stocks_arr = new Set<string>();
+                console.log("Data to pull stock list");
+                console.log(data.stock_sentiments)
                 setData(visualization(data.stock_sentiments, entries));
-            })
+                for (let i = 0; i < data.stock_sentiments.length; i++) {
+                    stocks_arr.add(data.stock_sentiments[0])
+                }
+                setAllStocks(stocks_arr);
+                })
             .catch(error => {
                 console.error('There was a problem fetching the data:', error);
             });
