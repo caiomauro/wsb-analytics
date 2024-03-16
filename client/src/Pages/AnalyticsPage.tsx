@@ -10,7 +10,7 @@ function AnalyticsPage(){
     const [rangeData, setRangeData] = useState<timeline_data[]>([]);
     const [isTooLarge, setIsTooLarge] = useState(false);
     const [stock, setStock ] = useState("");
-    const [ allStocks, setAllStocks ] = useState(new Set());
+    const [allStocks, setAllStocks] = useState<string[]>([]);
 
     useEffect(() => {
         function handleResize(){
@@ -217,9 +217,14 @@ function AnalyticsPage(){
                 console.log(data.stock_sentiments)
                 setData(visualization(data.stock_sentiments, entries));
                 for (let i = 0; i < data.stock_sentiments.length; i++) {
-                    stocks_arr.add(data.stock_sentiments[0])
+                    if (data.stock_sentiments[i][0].length > 5 || data.stock_sentiments[i][0] == "N/A"){
+                        continue
+                    } else {
+                        stocks_arr.add(data.stock_sentiments[i][0])
+                    }
                 }
-                setAllStocks(stocks_arr);
+                console.log(stocks_arr);
+                setAllStocks(Array.from(stocks_arr));
                 })
             .catch(error => {
                 console.error('There was a problem fetching the data:', error);
@@ -451,7 +456,7 @@ function AnalyticsPage(){
         
             if (runScript) {
                 fetchData(1000,10)
-                fetchDataRange("NVDA","2024-03-01",1)
+                
                 // Append the script to the DOM element
                 container.current?.appendChild(script);
             }
@@ -466,8 +471,7 @@ function AnalyticsPage(){
     return(
         <div className="flex flex-col w-full h-full custom-background-img-mobile sm:custom-background-img-desktop">
             <Navbar />
-                <div id="analytics-container" className="flex flex-col h-max w-full items-center overflow-y-auto gap-2">
-                    <button className="bg-blue-500 text-white p-2" onClick={()=>{fetchDataRange("NVDA","2024-03-01",1);}}>Range test</button>
+                <div id="analytics-container" className="flex flex-col h-max w-full items-center overflow-y-auto gap-2 pt-8">
                     <div id="count-button-container" className="flex flex-row w-full sm:w-2/4 justify-around item-center pt-2">
                         <button className="text-white bg-white/10 hover:ring-2 hover:ring-amber-300 focus:ring-2 focus:outline-none focus:ring-amber-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center" onClick={() => {fetchData(1000,10)}}>Top 10 Stocks</button>
                         <button className="text-white bg-white/10 hover:ring-2 hover:ring-amber-300 focus:ring-2 focus:outline-none focus:ring-amber-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center" onClick={() => {fetchData(1000,15)}}>Top 15 Stocks</button>
@@ -480,10 +484,21 @@ function AnalyticsPage(){
                             data.length > 0 && <MyResponsiveBarMobile data={data} />
                         )}
                     </div>
-                    <div className="flex flex-col h-screen w-max sm:h-max sm:w-4/6 sm:mx-auto items-center">
-                        <div className="tradingview-widget-container" ref={container}>
-                            <div className="tradingview-widget-container__widget"></div>
-                            <div className="tradingview-widget-copyright"><a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank"><span className="blue-text">Track all markets on TradingView</span></a></div>
+
+                    <div className="w-4/6 flex flex-row justify-between items-center pt-20">
+                        <p className="text-white text-2xl">Currently viewing: <span className="font-bold text-blue-500">{stock}</span></p>
+                        <select
+                            value={stock}
+                            onChange={(e) => {setStock(e.target.value); fetchDataRange(e.target.value,"2024-03-01",1)}}
+                            className="block text-white bg-white/10 hover:ring-2 hover:ring-amber-300 focus:ring-2 focus:outline-none focus:ring-amber-300 font-medium rounded-lg text-sm w-3/6"
+                        >
+                            <option value={stock}>Select a stock</option>
+                            {[...allStocks].map((stock, index) => (
+                                <option key={index} value={stock}>{stock}</option>
+                            ))}
+                        </select>
+                        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-black">
+                            <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M15.293 15.293l-4.854-4.854A5.957 5.957 0 0 0 11 6c0-3.309-2.691-6-6-6S-1 2.691-1 6s2.691 6 6 6c1.286 0 2.475-.399 3.469-1.078l4.854 4.854c.195.195.451.293.707.293s.512-.098.707-.293c.391-.391.391-1.023 0-1.414zM1 6c0-2.206 1.794-4 4-4s4 1.794 4 4-1.794 4-4 4-4-1.794-4-4z"/></svg>
                         </div>
                     </div>
                     <div id="count-container" className="flex flex-col h-128 w-full sm:h-128 sm:w-4/6 sm:mx-auto">
