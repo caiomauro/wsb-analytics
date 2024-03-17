@@ -41,7 +41,7 @@ def get_data():
     stock_sentiments = []
 
     #Number of posts to pull
-    scraped_posts = 10
+    scraped_posts = 15
 
 
     #Filter keywords

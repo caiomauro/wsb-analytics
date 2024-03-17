@@ -490,11 +490,11 @@ function AnalyticsPage(){
                         <select
                             value={stock}
                             onChange={(e) => {setStock(e.target.value); fetchDataRange(e.target.value,"2024-03-01",1)}}
-                            className="block text-white bg-white/10 hover:ring-2 hover:ring-amber-300 focus:ring-2 focus:outline-none focus:ring-amber-300 font-medium rounded-lg text-sm w-3/6"
+                            className="block bg-white/10 hover:ring-2 hover:ring-amber-300 focus:ring-2 focus:outline-none focus:ring-amber-300 font-medium rounded-lg text-sm w-3/6"
                         >
-                            <option value={stock}>Select a stock</option>
+                            <option className="bg-black" value={stock}>{stock ? stock : "Select a stock"}</option>
                             {[...allStocks].map((stock, index) => (
-                                <option key={index} value={stock}>{stock}</option>
+                                <option className="bg-black" key={index} value={stock}>{stock}</option>
                             ))}
                         </select>
                         <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-black">
