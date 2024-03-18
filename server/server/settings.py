@@ -56,7 +56,7 @@ CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
     'http://192.168.1.107:3000',
     'http://192.168.1.177',
-    'https://wsb-analytics.vercel.app/'
+    'https://wsb-analytics.vercel.app'
 ]
 
 ROOT_URLCONF = "server.urls"
