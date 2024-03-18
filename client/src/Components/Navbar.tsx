@@ -58,7 +58,7 @@ function Navbar() {
                         <a href="/" className={`${activePage === "/" ? "font-bold" : "font-thin"}`} onClick={() => handleSetActivePage("/")}>Home</a>
                         <a href="/analytics" className={`${activePage === "/analytics" ? "font-bold":"font-thin"}`} onClick={() => handleSetActivePage("/analytics")}>Analytics</a>
                         <a href="/data" className={`${activePage === "/data" ? "font-bold" :"font-thin"}`} onClick={() => handleSetActivePage("/data")}>Data</a>
-                        <a href="https://github.com/caiomauro/wsb-analytics" className={`${activePage === "/github" && "font-bold"}`} onClick={() => handleSetActivePage("/github")}>Github</a>
+                        <a href="https://github.com/caiomauro/wsb-analytics" target="_blank" className={`${activePage === "/github" && "font-bold"}`} onClick={() => handleSetActivePage("/github")} rel="noreferrer">Github</a>
                     </div>
                 </div>
                 ):( 
@@ -66,7 +66,7 @@ function Navbar() {
                     <a href="/" className={`${activePage === "/" ? "font-bold" : "font-thin"}`} onClick={() => handleSetActivePage("/")}>Home</a>
                     <a href="/analytics" className={`${activePage === "/analytics" ? "font-bold":"font-thin"}`} onClick={() => handleSetActivePage("/analytics")}>Analytics</a>
                     <a href="/data" className={`${activePage === "/data" ? "font-bold" :"font-thin"}`} onClick={() => handleSetActivePage("/data")}>Data</a>
-                    <a href="https://github.com/caiomauro/wsb-analytics" className={`${activePage === "/github" && "font-bold"}`} onClick={() => handleSetActivePage("/github")}>Github</a>
+                    <a href="https://github.com/caiomauro/wsb-analytics" target="_blank" className={`${activePage === "/github" && "font-bold"}`} onClick={() => handleSetActivePage("/github")} rel="noreferrer">Github</a>
                 </div>
                 )}
             </div>
