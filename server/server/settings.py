@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-ihn#5zfw7lf8=^1p_e+$lvmsz(mg-a^6*2fk1i-ni26%1t!77e"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["wsb-analytics-server.ue.r.appspot.com"]
 
