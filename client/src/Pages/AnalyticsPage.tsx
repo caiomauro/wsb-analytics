@@ -204,11 +204,12 @@ function AnalyticsPage(){
     }
 
     const fetchData = (count: number, entries: number) => {
-        fetch(`http://127.0.0.1:8000/api/stock-sentiments/?count=${count}`)  // Use backticks for template literals
+        fetch(`https://wsb-analytics-server.ue.r.appspot.com/api/stock-sentiments/?count=${count}`)  // Use backticks for template literals
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
+                console.log(response);
                 return response.json();
             })
             .then(data => {
@@ -232,7 +233,7 @@ function AnalyticsPage(){
     };
 
     const fetchDataRange = (stock: string, range: string, days: number) => {
-        fetch(`http://127.0.0.1:8000/api/stock-sentiments/range/?starting_date=${range}`)  // Use backticks for template literals
+        fetch(`https://wsb-analytics-server.ue.r.appspot.com/api/stock-sentiments/range/?starting_date=${range}`)  // Use backticks for template literals
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
