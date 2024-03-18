@@ -251,7 +251,7 @@ function AnalyticsPage(){
     const theme = {
         labels: { text: { fontSize: 15, fill: "black" } },
         axis: {
-          ticks: { text: { fontSize: 15, fill: "white" }, line: { strokeWidth: 0} },
+          ticks: { text: { fontSize: 13, fill: "white" }, line: { strokeWidth: 0} },
           legend: { text: { fontSize: 15, fill: "white"} },
           domain: { line: { strokeWidth: 2, stroke: 'white'}},
         },
@@ -317,7 +317,7 @@ function AnalyticsPage(){
             borderColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
             axisTop={null}
             axisRight={null}
-            axisBottom={{tickValues: 9}}
+            axisBottom={null}
             layout='horizontal'
             labelSkipWidth={12}
             labelSkipHeight={12}
@@ -352,6 +352,39 @@ function AnalyticsPage(){
             axisRight={null}
             axisBottom={{tickValues: 9}}
             layout='vertical'
+            labelSkipWidth={12}
+            labelSkipHeight={12}
+            borderWidth={1}
+            theme={theme}
+            role="application"
+            tooltip={data => {
+                return(
+                    <div className="flex flex-row bg-white p-1 px-2 rounded-md text-black">
+                        <p><span className="font-bold italic">{data.indexValue}</span>: +{data.formattedValue}  {data.id}</p>
+                    </div>
+                )
+              }}
+            ariaLabel="Nivo bar chart demo"
+            barAriaLabel={e=>e.id+": "+e.formattedValue+" in country: "+e.indexValue}
+        />
+    );
+
+    const MyResponsiveTimelineBarMobile: React.FC<MyResponsiveTimelineBarProps> = ({ data }) => (
+        <ResponsiveBar
+            data={data}
+            keys={['positive', 'negative', 'mixed']}
+            indexBy="day"
+            margin={{ top: 50, right: 40, bottom: 50, left: 85 }}
+            padding={0.3}
+            valueScale={{ type: 'linear' }}
+            indexScale={{ type: 'band', round: true }}
+            colors={['#22ff00', '#ff0000','#ffcc00']}
+            colorBy="id"
+            borderColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
+            axisTop={null}
+            axisRight={null}
+            axisBottom={{tickValues: 8}}
+            layout='horizontal'
             labelSkipWidth={12}
             labelSkipHeight={12}
             borderWidth={1}
@@ -456,6 +489,7 @@ function AnalyticsPage(){
         
             if (runScript) {
                 fetchData(1000,10)
+                fetchDataRange("NVDA","2024-03-01",1)
                 
                 // Append the script to the DOM element
                 container.current?.appendChild(script);
@@ -466,6 +500,14 @@ function AnalyticsPage(){
                 runScript = false;
             };
         }, []);
+
+        const getPreviousWeekStartDate = (): string => {
+            const currentDate = new Date();
+            const previousWeekStartDate = new Date(currentDate);
+            previousWeekStartDate.setDate(previousWeekStartDate.getDate() - 7);
+          
+            return previousWeekStartDate.toISOString().slice(0, 10);
+          }
         
 
     return(
@@ -477,7 +519,7 @@ function AnalyticsPage(){
                         <button className="text-white bg-white/10 hover:ring-2 hover:ring-amber-300 focus:ring-2 focus:outline-none focus:ring-amber-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center" onClick={() => {fetchData(1000,15)}}>Top 15 Stocks</button>
                         <button className="text-white bg-white/10 hover:ring-2 hover:ring-amber-300 focus:ring-2 focus:outline-none focus:ring-amber-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center" onClick={() => {fetchData(1000,20)}}>Top 20 Stocks</button>
                     </div>
-                    <div id="count-container" className="flex flex-col h-128 w-full sm:h-128 sm:w-4/6 sm:mx-auto">
+                    <div id="count-container" className="flex flex-col h-128 w-full sm:h-128 sm:w-4/6 sm:mx-auto pl-4">
                         {isTooLarge ? (
                             data.length > 0 && <MyResponsiveBar data={data} />
                         ) : (
@@ -485,11 +527,11 @@ function AnalyticsPage(){
                         )}
                     </div>
 
-                    <div className="w-4/6 flex flex-row justify-between items-center pt-20">
-                        <p className="text-white text-2xl">Currently viewing: <span className="font-bold text-blue-500">{stock}</span></p>
+                    <div className="w-5/6 sm:w-4/6 flex flex-row justify-between items-center sm:pt-20">
+                        <p className="text-white text-lg sm:text-2xl">Currently viewing: <span className="font-bold text-blue-500">{stock}</span></p>
                         <select
                             value={stock}
-                            onChange={(e) => {setStock(e.target.value); fetchDataRange(e.target.value,"2024-03-01",1)}}
+                            onChange={(e) => {setStock(e.target.value); fetchDataRange(e.target.value,getPreviousWeekStartDate(),1)}}
                             className="block bg-white/10 hover:ring-2 hover:ring-amber-300 focus:ring-2 focus:outline-none focus:ring-amber-300 font-medium rounded-lg text-sm w-3/6"
                         >
                             <option className="bg-black" value={stock}>{stock ? stock : "Select a stock"}</option>
@@ -501,8 +543,10 @@ function AnalyticsPage(){
                             <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M15.293 15.293l-4.854-4.854A5.957 5.957 0 0 0 11 6c0-3.309-2.691-6-6-6S-1 2.691-1 6s2.691 6 6 6c1.286 0 2.475-.399 3.469-1.078l4.854 4.854c.195.195.451.293.707.293s.512-.098.707-.293c.391-.391.391-1.023 0-1.414zM1 6c0-2.206 1.794-4 4-4s4 1.794 4 4-1.794 4-4 4-4-1.794-4-4z"/></svg>
                         </div>
                     </div>
-                    <div id="count-container" className="flex flex-col h-128 w-full sm:h-128 sm:w-4/6 sm:mx-auto">
-                        {rangeData.length > 0 && <MyResponsiveTimelineBar data={rangeData} />}
+                    <div id="count-container" className="flex flex-col h-128 w-full sm:h-128 sm:w-4/6 pl-4 sm:mx-auto ">
+                    {isTooLarge ? (
+                        rangeData.length > 0 && <MyResponsiveTimelineBar data={rangeData} />
+                    ): (    rangeData.length > 0 && <MyResponsiveTimelineBarMobile data={rangeData} /> )}
                     </div>
                 </div>
             <BottomHeader />

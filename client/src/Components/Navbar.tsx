@@ -37,7 +37,7 @@ function Navbar() {
             <div id="navbar" className="grid grid-cols-2 gap-2 sm:gap-0 sm:grid-cols-3 pt-8 sm:pt-4 pb-2">
                 <div id="logo-div" className="flex flex-col justify-start items-start mx-auto sm:mx-0 sm:pl-32 sm:col-span-1">
                     <div className="flex flex-col justify-start items-center">
-                        <h1 className="font-italics text-xl">WSB ANALYTICS.</h1>
+                        <a href="/" className="font-italics text-xl sm:text-2xl rounded-md p-1 bg-gradient-to-r from-cyan-500 to-blue-500 text-transparent bg-clip-text">WSB ANALYTICS.</a>
                     </div>
                 </div>
                 <div id="title-div" className="flex items-center justify-center sm:col-span-1">
@@ -47,24 +47,26 @@ function Navbar() {
                 <div className="flex flex-row w-screen sm:w-full pl-2 pt-2">
                     <div className="flex justify-start">
                         <button onClick={toggleMenu} className="text-gray-600 focus:outline-none">
+                        <span className="animate-pulse">
                             <svg className="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="white">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18l6-6-6-6"></path>
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18l6-6-6-6"></path>      
                             </svg>
+                        </span>
                         </button>
                     </div>
                     <div id="link-div" className={`flex flex-row w-full justify-between p-2 pr-4 sm:col-span-1 ${isMenuOpen ? '' : 'hidden'}`}>
                         <a href="/" className={`${activePage === "/" ? "font-bold" : "font-thin"}`} onClick={() => handleSetActivePage("/")}>Home</a>
                         <a href="/analytics" className={`${activePage === "/analytics" ? "font-bold":"font-thin"}`} onClick={() => handleSetActivePage("/analytics")}>Analytics</a>
-                        <a href="/data" className={`font-thin ${activePage === "/data" && "font-bold"}`} onClick={() => handleSetActivePage("/data")}>Data</a>
-                        <a href="/github" className={`font-thin ${activePage === "/github" && "font-bold"}`} onClick={() => handleSetActivePage("/github")}>Github</a>
+                        <a href="/data" className={`${activePage === "/data" ? "font-bold" :"font-thin"}`} onClick={() => handleSetActivePage("/data")}>Data</a>
+                        <a href="https://github.com/caiomauro/wsb-analytics" className={`${activePage === "/github" && "font-bold"}`} onClick={() => handleSetActivePage("/github")}>Github</a>
                     </div>
                 </div>
                 ):( 
                 <div id="link-div" className="flex flex-row justify-between pl-2 pr-2 sm:pl-8 sm:pr-24 sm:col-span-1">
                     <a href="/" className={`${activePage === "/" ? "font-bold" : "font-thin"}`} onClick={() => handleSetActivePage("/")}>Home</a>
                     <a href="/analytics" className={`${activePage === "/analytics" ? "font-bold":"font-thin"}`} onClick={() => handleSetActivePage("/analytics")}>Analytics</a>
-                    <a href="/data" className={`font-thin ${activePage === "/data" && "font-bold"}`} onClick={() => handleSetActivePage("/data")}>Data</a>
-                    <a href="/github" className={`font-thin ${activePage === "/github" && "font-bold"}`} onClick={() => handleSetActivePage("/github")}>Github</a>
+                    <a href="/data" className={`${activePage === "/data" ? "font-bold" :"font-thin"}`} onClick={() => handleSetActivePage("/data")}>Data</a>
+                    <a href="https://github.com/caiomauro/wsb-analytics" className={`${activePage === "/github" && "font-bold"}`} onClick={() => handleSetActivePage("/github")}>Github</a>
                 </div>
                 )}
             </div>
