@@ -465,8 +465,8 @@ function DataPage() {
     return (
         <div className="flex flex-col w-full h-full items-center custom-background-img-mobile sm:custom-background-img-desktop">
             <Navbar />
-            <div className="flex flex-col h-max w-full items-center overflow-y-scroll gap-24 pt-8 pb-4">
-                <div id="text-holder" className="flex flex-col h-max w-5/6 sm:w-3/6 items-center overflow-y-auto gap-2 pt-8">
+            <div className="flex flex-col h-max w-full items-center gap-24 pt-8 pb-4">
+                <div id="text-holder" className="flex flex-col h-max w-5/6 sm:w-3/6 items-center gap-2 pt-8">
                     <h2 className="text-2xl font-bold pb-4">Training <span className="text-blue-500">Data</span> Sample</h2>
                     <p className="font-semilight indent-8">
                     The data being viewed, albeit not in the best format, is available in JSONL (JSON Lines) format on GitHub. This excerpt comprises 450 lines extracted from the main dataset utilized to train the OpenHermes Mistral Model (LLM).
