@@ -41,7 +41,7 @@ def get_data():
     stock_sentiments = []
 
     #Number of posts to pull
-    scraped_posts = 15
+    scraped_posts = 5
 
 
     #Filter keywords
@@ -164,7 +164,7 @@ def get_data():
     #Get the drop on the AI fr
     def analyze_post(post: str, title: str):
         try:
-            client = OpenAI(base_url="http://localhost:1234/v1", api_key="not-needed")
+            client = OpenAI(base_url="http://localhost:1234/v1", api_key="lm-studio")
 
             completion = client.chat.completions.create(
                 model="local-model", # this field is currently unused
@@ -210,7 +210,7 @@ def get_data():
     #Final report
     def analysis_to_array(analysis: str):
         try:
-            client = OpenAI(base_url="http://localhost:1234/v1", api_key="not-needed")
+            client = OpenAI(base_url="http://localhost:1234/v1", api_key="lm-studio")
 
             completion = client.chat.completions.create(
                 model="local-model", # this field is currently unused
