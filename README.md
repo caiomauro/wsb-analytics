@@ -1,19 +1,6 @@
-# wsb-analytics
+# WSBanalytics
  
-Analytics stuff
+WSB analytics displays visualizes sentiment analysis data gathered by a fine-tuned OpenHermes-2.5-Mistral-7b model. First the model was trained to take user text posts and return a synopsis on the cleaned text. This analysis included things like the stock mentioned, money gained/lost, new/reasoning for results, and finally general sentiment. Then the model was trained to take that analysis and return a string that could be perfectly parsed into useable data. The Django backend, hosted on Google Cloud App Engine, runs an automated script every hour to process the last 20 posts. The React TSX front visualizes that data, displaying a Top Stocks graph and a timeline view of that stocks sentiment of the past 7 days. While still rough around the edges the project is live and collecting data. 
 
-<div className="flex flex-col h-screen w-max sm:h-max sm:w-4/6 sm:mx-auto items-center">
-                        <div className="tradingview-widget-container" ref={container}>
-                            <div className="tradingview-widget-container__widget"></div>
-                            <div className="tradingview-widget-copyright"><a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank"><span className="blue-text">Track all markets on TradingView</span></a></div>
-                        </div>
-                    </div>
-
-                    <iframe 
-                    src="https://drive.google.com/file/d/1ZOvHeQpRFOZz689fKGWIfavA5dwOo9ke/preview" 
-                    title="PDF-Viewer"
-                    className="ring-1 ring-blue-500" 
-                    width={iframeWidth} 
-                    height={iframeHeight} 
-                    allow="autoplay"
-                />
+To Do:
+- Better filtering to clear backend of "N/A" data and Tesla (instead of TSLA) data.
