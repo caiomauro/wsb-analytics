@@ -11,7 +11,6 @@ function AnalyticsPage() {
   const [isTooLarge, setIsTooLarge] = useState(false);
   const [stock, setStock] = useState("NVDA");
   const [allStocks, setAllStocks] = useState<string[]>([]);
-  const [currentWeek, setCurrentWeek] = useState("");
 
 
   useEffect(() => {
@@ -509,7 +508,6 @@ function AnalyticsPage() {
 
     if (runScript) {
       fetchData(1000, 10);
-      fetchDataRange("NVDA", getPreviousWeekStartDate(), 1);
       // Append the script to the DOM element
       container.current?.appendChild(script);
     }
@@ -613,7 +611,7 @@ function AnalyticsPage() {
             value={stock}
             onChange={(e) => {
               setStock(e.target.value);
-              fetchDataRange(e.target.value, getPreviousWeekStartDate(), 1);
+              fetchDataRange(e.target.value,getPreviousWeekStartDate(), 1);
             }}
             className="block bg-white/10 hover:ring-2 hover:ring-amber-300 focus:ring-2 focus:outline-none focus:ring-amber-300 font-medium rounded-lg text-sm w-3/6"
           >
