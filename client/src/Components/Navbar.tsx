@@ -33,11 +33,11 @@ function Navbar() {
     };
 
     return (
-        <div className="w-full bg-gray-500/70">
+        <div className="w-full">
             <div id="navbar" className="grid grid-cols-2 gap-2 sm:gap-0 sm:grid-cols-3 pt-8 sm:pt-4 pb-2">
                 <div id="logo-div" className="flex flex-col justify-start items-start mx-auto sm:mx-0 sm:pl-32 sm:col-span-1">
                     <div className="flex flex-col justify-start items-center">
-                        <a href="/" className="font-italics text-xl sm:text-2xl sm:font-semibold rounded-md p-1 bg-gradient-to-r from-cyan-500 to-blue-500 text-transparent bg-clip-text">WSB ANALYTICS.</a>
+                        <a href="/" className="font-italics text-xl sm:text-2xl sm:font-semibold rounded-md p-1 bg-gradient-to-r from-cyan-500 to-blue-500 text-transparent bg-clip-text">WSB Analytics</a>
                     </div>
                 </div>
                 <div id="title-div" className="flex items-center justify-center sm:col-span-1">

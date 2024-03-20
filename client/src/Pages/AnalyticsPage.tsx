@@ -1,9 +1,9 @@
 import { ResponsiveBar } from "@nivo/bar";
 import "flowbite";
 import { useEffect, useRef, useState } from "react";
+import { TickerSymbol, TickerTape } from "react-ts-tradingview-widgets";
 import BottomHeader from "../Components/BottomHeader";
 import Navbar from "../Components/Navbar";
-import { TickerSymbol, TickerTape } from "react-ts-tradingview-widgets";
 
 function AnalyticsPage() {
   const [data, setData] = useState<graph_data[]>([]);
@@ -11,6 +11,8 @@ function AnalyticsPage() {
   const [isTooLarge, setIsTooLarge] = useState(false);
   const [stock, setStock] = useState("NVDA");
   const [allStocks, setAllStocks] = useState<string[]>([]);
+  const [currentWeek, setCurrentWeek] = useState("");
+
 
   useEffect(() => {
     function handleResize() {
@@ -507,8 +509,7 @@ function AnalyticsPage() {
 
     if (runScript) {
       fetchData(1000, 10);
-      fetchDataRange("NVDA", "2024-03-01", 1);
-
+      fetchDataRange("NVDA", getPreviousWeekStartDate(), 1);
       // Append the script to the DOM element
       container.current?.appendChild(script);
     }
@@ -523,7 +524,6 @@ function AnalyticsPage() {
     const currentDate = new Date();
     const previousWeekStartDate = new Date(currentDate);
     previousWeekStartDate.setDate(previousWeekStartDate.getDate() - 7);
-
     return previousWeekStartDate.toISOString().slice(0, 10);
   };
 
