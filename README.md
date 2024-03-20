@@ -4,11 +4,11 @@ WSB analytics displays visualizes sentiment analysis data gathered by a fine-tun
 
 <table>
   <tr>
-    <td><img src="homepage.png" alt="home page" style="width:500px;"></td>
-    <td><img src="topstocks.png" alt="main graph" style="width:500px;"></td>
+    <td><img src="homepage.PNG" alt="home page" style="width:500px;"></td>
+    <td><img src="topstocks.PNG" alt="main graph" style="width:500px;"></td>
   </tr>
   <tr>
-    <td><img src="7dayview.png" alt="timeline graph" style="width:500px;"></td>
+    <td><img src="7dayview.PNG" alt="timeline graph" style="width:500px;"></td>
   </tr>
 </table>
 
