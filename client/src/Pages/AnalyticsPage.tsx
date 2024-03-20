@@ -89,6 +89,10 @@ function AnalyticsPage(){
 
         Object.entries(stock_sentiment_count).forEach(([key, value]) => {
 
+            if (key === "N/A" || key === "Tesla" || key === "bonds") {
+                return; // Skip this iteration
+            }
+
             const stock_data: graph_data[] = [
                 {
                     stock: key,
