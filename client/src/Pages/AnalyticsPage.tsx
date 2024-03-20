@@ -2,7 +2,8 @@ import { ResponsiveBar } from '@nivo/bar';
 import 'flowbite';
 import { useEffect, useRef, useState } from 'react';
 import BottomHeader from "../Components/BottomHeader";
-import Navbar from "../Components/Navbar";
+import Navbar from "../Components/Navbar"
+import { TickerSymbol, TickerTape } from "react-ts-tradingview-widgets";
 
 function AnalyticsPage(){
 
@@ -207,7 +208,7 @@ function AnalyticsPage(){
                 const stocks_arr = new Set<string>();
                 setData(visualization(data.stock_sentiments, entries));
                 for (let i = 0; i < data.stock_sentiments.length; i++) {
-                    if (data.stock_sentiments[i][0].length > 5 || data.stock_sentiments[i][0] == "N/A" || data.stock_sentiments[i][0] == "Tesla" || data.stock_sentiments[i][0] == "bonds"){
+                    if (data.stock_sentiments[i][0].length > 5 || data.stock_sentiments[i][0] === "N/A" || data.stock_sentiments[i][0] === "Tesla" || data.stock_sentiments[i][0] === "bonds"){
                         continue
                     } else {
                         stocks_arr.add(data.stock_sentiments[i][0])
@@ -392,6 +393,7 @@ function AnalyticsPage(){
 
 
         const container = useRef<HTMLDivElement>(null);
+        
         let runScript = true;
       
         useEffect(() => {
@@ -484,6 +486,7 @@ function AnalyticsPage(){
             };
         }, []);
 
+
         const getPreviousWeekStartDate = (): string => {
             const currentDate = new Date();
             const previousWeekStartDate = new Date(currentDate);
@@ -491,16 +494,44 @@ function AnalyticsPage(){
           
             return previousWeekStartDate.toISOString().slice(0, 10);
           }
+
+    const symbols: TickerSymbol[] = [
+        {
+          "proName": "NASDAQ:NVDA",
+          "title": "NVDA"
+        },
+        {
+          "proName": "AMEX:SPY",
+          "title": "SPY"
+        },
+        {
+          "proName": "NASDAQ:TSLA",
+          "title": "TSLA"
+        },
+        {
+          "proName": "NASDAQ:AMD",
+          "title": "AMD"
+        },
+        {
+          "proName": "NYSE:TSM",
+          "title": "TSM"
+        },
+        {
+          "proName": "NYSE:PATH",
+          "title": "PATH"
+        }
+      ]
         
 
     return(
         <div className="flex flex-col w-full h-full custom-background-img-mobile sm:custom-background-img-desktop">
             <Navbar />
-                <div id="analytics-container" className="flex flex-col h-max w-full items-center overflow-y-auto gap-2 pt-8">
-                    <div id="count-button-container" className="flex flex-row w-full sm:w-2/4 justify-around item-center pt-2">
-                        <button className="text-white bg-white/10 hover:ring-2 hover:ring-amber-300 focus:ring-2 focus:outline-none focus:ring-amber-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center" onClick={() => {fetchData(1000,10)}}>Top 10 Stocks</button>
-                        <button className="text-white bg-white/10 hover:ring-2 hover:ring-amber-300 focus:ring-2 focus:outline-none focus:ring-amber-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center" onClick={() => {fetchData(1000,15)}}>Top 15 Stocks</button>
-                        <button className="text-white bg-white/10 hover:ring-2 hover:ring-amber-300 focus:ring-2 focus:outline-none focus:ring-amber-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center" onClick={() => {fetchData(1000,20)}}>Top 20 Stocks</button>
+                <div id="analytics-container" className="flex flex-col h-max w-full items-center overflow-y-auto gap-2 pt-8"> 
+                <TickerTape colorTheme="dark" symbols={symbols} isTransparent={true}></TickerTape>
+                    <div id="count-button-container" className="flex flex-row w-full sm:w-2/4 justify-around item-center pt-8">
+                        <button className="text-white bg-white/10 hover:ring-2 hover:ring-amber-300 focus:ring-2 focus:outline-none focus:ring-amber-300 font-medium rounded-lg text-sm px-2 sm:px-5 py-2.5 text-center inline-flex items-center" onClick={() => {fetchData(10000,10)}}>Top 10 Stocks</button>
+                        <button className="text-white bg-white/10 hover:ring-2 hover:ring-amber-300 focus:ring-2 focus:outline-none focus:ring-amber-300 font-medium rounded-lg text-sm px-2 sm:px-5 py-2.5 text-center inline-flex items-center" onClick={() => {fetchData(10000,15)}}>Top 15 Stocks</button>
+                        <button className="text-white bg-white/10 hover:ring-2 hover:ring-amber-300 focus:ring-2 focus:outline-none focus:ring-amber-300 font-medium rounded-lg text-sm px-2 sm:px-5 py-2.5 text-center inline-flex items-center" onClick={() => {fetchData(10000,20)}}>Top 20 Stocks</button>
                     </div>
                     <div id="count-container" className="flex flex-col h-128 w-full sm:h-128 sm:w-4/6 sm:mx-auto pl-4">
                         {isTooLarge ? (
