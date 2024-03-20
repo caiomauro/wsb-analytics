@@ -9,7 +9,7 @@ function AnalyticsPage(){
     const [data, setData] = useState<graph_data[]>([]);
     const [rangeData, setRangeData] = useState<timeline_data[]>([]);
     const [isTooLarge, setIsTooLarge] = useState(false);
-    const [stock, setStock ] = useState("");
+    const [stock, setStock ] = useState("NVDA");
     const [allStocks, setAllStocks] = useState<string[]>([]);
 
     useEffect(() => {
@@ -86,9 +86,6 @@ function AnalyticsPage(){
             }
         });
 
-        console.log(stock)
-        console.log(stock_sentiment_count)
-
         Object.entries(stock_sentiment_count).forEach(([key, value]) => {
 
             const stock_data: graph_data[] = [
@@ -116,7 +113,6 @@ function AnalyticsPage(){
             return sumB - sumA;
         });
 
-        console.log(final_data)
         return(final_data.slice(0,entries));
     }
 
@@ -163,7 +159,6 @@ function AnalyticsPage(){
         const printHolder: {[key: string]: {[date: string]: Array<number>}} = {};
         const final_data: any[] = [] 
 
-        console.log("This is the data", data)
         for (let i=0; i < data.length; i++) {
             const stock = data[i][0]
             const sentiment = data[i][1]
@@ -197,9 +192,6 @@ function AnalyticsPage(){
             final_data.push(stock_data[0]);
         });
 
-        console.log(printHolder);
-        console.log("Printing the parsed data for chart")
-        console.log(final_data);
         return final_data;
     }
 
@@ -209,22 +201,18 @@ function AnalyticsPage(){
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
-                console.log(response);
                 return response.json();
             })
             .then(data => {
                 const stocks_arr = new Set<string>();
-                console.log("Data to pull stock list");
-                console.log(data.stock_sentiments)
                 setData(visualization(data.stock_sentiments, entries));
                 for (let i = 0; i < data.stock_sentiments.length; i++) {
-                    if (data.stock_sentiments[i][0].length > 5 || data.stock_sentiments[i][0] == "N/A"){
+                    if (data.stock_sentiments[i][0].length > 5 || data.stock_sentiments[i][0] == "N/A" || data.stock_sentiments[i][0] == "Tesla" || data.stock_sentiments[i][0] == "bonds"){
                         continue
                     } else {
                         stocks_arr.add(data.stock_sentiments[i][0])
                     }
                 }
-                console.log(stocks_arr);
                 setAllStocks(Array.from(stocks_arr));
                 })
             .catch(error => {
@@ -242,7 +230,6 @@ function AnalyticsPage(){
             })
             .then(data => {
                 setRangeData(visualizationTimeline(stock,data.stock_sentiments,days));
-                console.log(rangeData);
             })
             .catch(error => {
                 console.error('There was a problem fetching the data:', error);
@@ -342,7 +329,7 @@ function AnalyticsPage(){
             data={data}
             keys={['positive', 'negative', 'mixed']}
             indexBy="day"
-            margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
+            margin={{ top: 50, right: 60, bottom: 50, left: 60 }}
             padding={0.3}
             valueScale={{ type: 'linear' }}
             indexScale={{ type: 'band', round: true }}
@@ -453,8 +440,8 @@ function AnalyticsPage(){
                         ]
                     ],
                     "chartOnly": false,
-                    "width": 800,
-                    "height": 400,
+                    "width": 100%,
+                    "height": 100%,
                     "locale": "en",
                     "colorTheme": "dark",
                     "autosize": false,
@@ -478,12 +465,7 @@ function AnalyticsPage(){
                     "lineWidth": 2,
                     "lineType": 0,
                     "dateRanges": [
-                        "1d|1",
-                        "1m|30",
-                        "3m|60",
-                        "12m|1D",
-                        "60m|1W",
-                        "all|1M"
+                        "1w|15",
                     ],
                     "dateFormat": "yyyy-MM-dd"
                 }`;

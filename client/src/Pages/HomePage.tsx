@@ -128,16 +128,16 @@ function HomePage(){
                 <div id="animation-container" className="flex flex-col items-center sm:flex-row w-full">
                     <div className="flex flex-col items-center pb-32 sm:pb-10 w-full">
                         <div className="flex flex-col pb-8 w-full">
-                            <h1 className="text-center text-2xl pb-2">Welcome to the future of trading </h1> 
-                            <h1 id="text" className="text-3xl text-center sm:text-7xl text-blue-500">Live Better</h1>
+                            <h1 className="text-center text-2xl sm:text-3xl pb-2">Welcome to the future of trading </h1> 
+                            <h1 id="text" className="text-3xl text-center sm:text-8xl text-blue-500">Live Better</h1>
                         </div>
                         <div id="button-container" className=" text-3xl bg-gradient-to-r from-cyan-500 to-blue-500 hover:ring-1 hover:ring-white rounded-md shadow-lg shadow-blue-500/50 sm:mt-4">
                             <button className="text-white p-2 px-4" onClick={() => {navigate("/analytics")}}>See the data </button>
                         </div>
                     </div>
                     <div id="text-container" className="flex flex-col w-5/6 sm:w-4/6 justify-around sm:gap-20">
-                        <h1 className="pb-3 text-center text-2xl sm:text-4xl font-thin">Robust LLM fine-tuned on <span className="text-blue-500 text-3xl sm:text-5xl font-normal bg-gradient-to-r from-cyan-500 to-blue-500 text-transparent bg-clip-text">100k</span> lines of private curated data.</h1>
-                        <h1 className="pb-3 text-center text-2xl sm:text-4xl font-thin">Analyzing <span className="text-blue-500 text-3xl sm:text-5xl font-normal bg-gradient-to-r from-cyan-500 to-blue-500 text-transparent bg-clip-text">thousands</span> of posts to boost your trading strategy.</h1>
+                        <h1 className="pb-3 text-center text-2xl sm:text-5xl font-thin">Robust LLM fine-tuned on <span className="text-blue-500 text-3xl sm:text-5xl font-normal bg-gradient-to-r from-cyan-500 to-blue-500 text-transparent bg-clip-text">100k</span> lines of private curated data.</h1>
+                        <h1 className="pb-3 text-center text-2xl sm:text-5xl font-thin">Analyzing <span className="text-blue-500 text-3xl sm:text-5xl font-normal bg-gradient-to-r from-cyan-500 to-blue-500 text-transparent bg-clip-text">thousands</span> of posts to boost your trading strategy.</h1>
                     </div>
                 </div>
             </div>
