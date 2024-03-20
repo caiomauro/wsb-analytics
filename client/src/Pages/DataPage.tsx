@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import Navbar from '../Components/Navbar';
-import BottomHeader from '../Components/BottomHeader';
+import React, { useState } from "react";
+import Navbar from "../Components/Navbar";
+import BottomHeader from "../Components/BottomHeader";
 import CodeMirror from "@uiw/react-codemirror";
 import { vscodeDark } from "@uiw/codemirror-theme-vscode";
 
 function DataPage() {
-    const [iframeWidth, setIframeWidth] = useState(1000);
-    const [iframeHeight, setIframeHeight] = useState(650);
-    const code = `{"text": "input: Stock/Crypto: Super Micro Computer Inc. (SMCI)\nHow much profit/loss: The user mentions making a slight loss during a bull run, but the exact amount is not specified.\nExpectations for stock/crypto: The user seems to have had high expectations for SMCI, hoping for a dip to buy more stock and expecting a rally to reach 200. However, their expectations did not come true and they ended up taking a loss.\nReasoning for expectations: The user's reasoning is not clearly stated, but they mention buying put options and hoping for a dip to buy more stock.\nNews shared: No specific news is shared in this post.\nGeneral sentiment about stock/crypto: The user seems frustrated and disappointed with their investment in SMCI, expressing frustration with their analysis and decision-making. output: SMCI,negative"}
+  const [iframeWidth, setIframeWidth] = useState(1000);
+  const [iframeHeight, setIframeHeight] = useState(650);
+  const code = `{"text": "input: Stock/Crypto: Super Micro Computer Inc. (SMCI)\nHow much profit/loss: The user mentions making a slight loss during a bull run, but the exact amount is not specified.\nExpectations for stock/crypto: The user seems to have had high expectations for SMCI, hoping for a dip to buy more stock and expecting a rally to reach 200. However, their expectations did not come true and they ended up taking a loss.\nReasoning for expectations: The user's reasoning is not clearly stated, but they mention buying put options and hoping for a dip to buy more stock.\nNews shared: No specific news is shared in this post.\nGeneral sentiment about stock/crypto: The user seems frustrated and disappointed with their investment in SMCI, expressing frustration with their analysis and decision-making. output: SMCI,negative"}
     {"text": "input: Stock/Crypto: NVIDIA (NVDA)\nHow much profit/loss: Not specified, but the user mentions buying call options on NVDA and selling some of them for a profit.\nExpectations for stock/crypto: The user expects NVDA to perform well and mentions that it has the potential to make the SPY (S&P 500 ETF) go up.\nReasoning for expectations: The user's reasoning is not explicitly mentioned, but they mention buying call options on NVDA and selling some of them for a profit. They also mention that NVDA's dip caused some lost profit.\nNews shared: No specific news shared.\nGeneral sentiment about stock/crypto: The user seems to have a positive sentiment towards NVDA and believes that it will perform well. They also mention the potential for NVDA to impact the overall market (SPY). output: NVDA,positive"}
     {"text": "input: Stock/Crypto: Blackberry (BB)\nHow much profit/loss: Not specified, but the user seems to be considering investing in Blackberry.\nExpectations for stock/crypto: The user expects Blackberry to perform well based on the timing of their warrant reporting and the anticipation of earnings. They also mention concerns about leadership and the possibility of it becoming another hype play.\nReasoning for expectations: The user's reasoning is based on the timing of Blackberry's warrant reporting, the anticipation of earnings, and their concerns about leadership.\nNews shared: The user shared a link to a SEC filing related to Blackberry's warrant reporting.\nGeneral sentiment about stock/crypto: The user seems to have mixed sentiments about Blackberry, mentioning both positive aspects (timing of warrant reporting, anticipation of earnings) and concerns (leadership, potential hype play). output: BB,mixed"}
     {"text": "input: Stock/Crypto: Algonquin Power (AQN)\nHow much profit/loss: Not specified, but the user mentions wanting to maximize earnings through a short-term option play.\nExpectations for stock/crypto: The user expects the stock to perform well based on the potential strike by the union workforce and the possibility of a buyout.\nReasoning for expectations: The user's reasoning is based on the potential strike by the union workforce, the positive earnings outlook, and the news of a possible buyout.\nNews shared: The user shared news about the potential strike by the union workforce and the announcement of a position taken by Aigen Investment Management.\nGeneral sentiment about stock/crypto: The user seems to have a positive sentiment towards Algonquin Power and believes that it has the potential to generate profits through short-term options and potential news developments. output: AQN,positive"}
@@ -462,31 +462,47 @@ function DataPage() {
     {"text": "input: Title: dd opinion upcoming cost earnings Post: first dd post please offer feedback criticism appropriate missed anything worth including let know tldr buy call ive seen market recently costco grown almost 100 point ytd sign slowing see first picture market sentiment towards cost earnings seem optimistic according investopedia article ive found costco expected post earnings 162 billion 10 since last year 728 million expected rise membership back expectation well speaking membership costco started cracking membership sharing contributed rise membership rate go figure costco might also raise membership price might boost earnings nicely generally increase membership price every 5 6 year overdue increase last year quarter costcos eps par slightly prediction strongly hint patern continue year well see second picture course market could still sour feeling costco though believe unlikely ive analyzed historical market response last 3 quarter reported earnings theyve indicated bullish market please see picture 345 personal experience love costco shop fairly often see reason earnings could go south however cfo richard galanti set retire march 15 week earnings keep mind moon go source httpswwwnasdaqcommarketactivitystockscostearnings httpswwwinvestopediacomcostcoq2fy2024earningspreview8602138 httpswwwcbsnewscomampnewscostcomembershipsharingcrackdown httpswwwthestreetcomretailcostcosharesnewsonamembershippriceincrease output: Stock/Crypto: Costco (COST)\n\nHow much profit/loss: Not specified, but the user mentions that Costco has grown almost 100 points year-to-date.\n\nExpectations for stock/crypto: The user expects Costco to perform well based on market sentiment, optimistic expectations for post-earnings, and potential membership price increases.\n\nReasoning for expectations: The user's reasoning is based on market sentiment, expectations for post-earnings revenue, potential membership price increases, and historical market response to earnings reports.\n\nNews shared: The user shared news about Costco's expected post-earnings revenue, potential membership price increases, and CFO Richard Galanti's retirement.\n\nGeneral sentiment about stock/crypto: The user seems to have a positive sentiment towards Costco and believes that it will perform well, although they mention the possibility of a market downturn."}
     {"text": "input: Title: people still ask difference amdnvda amd different nvda wendys terminology Post: dear fellow comparing nvda amd like comparing wendys mcdonalds yes sell form burgerand yes wendys seem like expensive choicebut get actual burger actual hanky slapper slightly higher monetary price mcdonalds scenario sound cheaper due cheap burger price offer le meat expensive priceperounce measurement go wendys get sucked suck pet chicken love pet case still dont understandthey dont even sell burger wish luck world dear fellow make money make short beautiful life chicken want best tldr cluck sake total 600 character 128 word clucking read amd expensive cluck make nvda look cheap cluck edit spelling atrocious fix edit 2 addition tldr biggest beneficiary chip act nvda rest brought common sense edit 3 im getting literal threat simply stated factual math amd expensive nvda hardly benefit chip act compared nvda sorry sorry math unbiased universal meaning math upset problem universal language doesnt revolve around output: Stock/Crypto: AMD (Advanced Micro Devices) and NVDA (NVIDIA)\nHow much profit/loss: Not specified, but the user seems to be discussing the price difference between AMD and NVDA.\nExpectations for stock/crypto: The user believes that AMD is more expensive compared to NVDA and suggests that NVDA may be a cheaper option.\nReasoning for expectations: The user's reasoning is based on the price difference between AMD and NVDA, comparing it to the difference between Wendy's and McDonald's burgers.\nNews shared: The user shared news about the Chip Act, stating that NVDA would be the biggest beneficiary.\nGeneral sentiment about stock/crypto: The user seems to have a negative sentiment towards AMD, considering it expensive compared to NVDA. They also express frustration with people who don't understand the difference between the two stocks."}`;
 
-    return (
-        <div className="flex flex-col w-full h-full items-center custom-background-img-mobile sm:custom-background-img-desktop">
-            <Navbar />
-            <div className="flex flex-col h-max w-full items-center gap-24 pt-8 pb-4">
-                <div id="text-holder" className="flex flex-col h-max w-5/6 sm:w-3/6 items-center gap-2 pt-8">
-                    <h2 className="text-2xl font-bold pb-4">Training <span className="text-blue-500">Data</span> Sample</h2>
-                    <p className="font-semilight indent-8">
-                    The data being viewed, albeit not in the best format, is available in JSONL (JSON Lines) format on GitHub. This excerpt comprises 450 lines extracted from the main dataset utilized to train the OpenHermes Mistral Model (LLM).
-
-                    A portion of this dataset was used to train the initial sentiment gathering process. This involved collecting sentiment labels for various texts. Subsequently, another segment of the data was utilized to train the Language Model to transform the sentiment analysis into a predictable and parsable string format. This dual-purpose training aimed to enhance both sentiment analysis accuracy and the language model's ability to generate coherent and structured textual output.
-
-                    Overall, this dataset serves as a foundational component in refining sentiment analysis techniques and advancing the capabilities of the Language Model through rigorous training and data-driven learning. Feel free to use and modify this data!</p>
-                </div>
-                <CodeMirror
-                value={code}
-                readOnly={true}
-                typeof='jsonl'
-                theme={vscodeDark}
-                height="600px"
-                className="w-5/6 sm:w-4/6 h-4/6 ring-1 ring-blue-500"
-                />
-            </div>
-            <BottomHeader />
+  return (
+    <div className="flex flex-col w-full h-full items-center custom-background-img-mobile sm:custom-background-img-desktop">
+      <Navbar />
+      <div className="flex flex-col h-max w-full items-center gap-24 pt-8 pb-4">
+        <div
+          id="text-holder"
+          className="flex flex-col h-max w-5/6 sm:w-3/6 items-center gap-2 pt-8"
+        >
+          <h2 className="text-2xl font-bold pb-4">
+            Training <span className="text-blue-500">Data</span> Sample
+          </h2>
+          <p className="font-semilight indent-8">
+            The data being viewed, albeit not in the best format, is available
+            in JSONL (JSON Lines) format on GitHub. This excerpt comprises 450
+            lines extracted from the main dataset utilized to train the
+            OpenHermes Mistral Model (LLM). A portion of this dataset was used
+            to train the initial sentiment gathering process. This involved
+            collecting sentiment labels for various texts. Subsequently, another
+            segment of the data was utilized to train the Language Model to
+            transform the sentiment analysis into a predictable and parsable
+            string format. This dual-purpose training aimed to enhance both
+            sentiment analysis accuracy and the language model's ability to
+            generate coherent and structured textual output. Overall, this
+            dataset serves as a foundational component in refining sentiment
+            analysis techniques and advancing the capabilities of the Language
+            Model through rigorous training and data-driven learning. Feel free
+            to use and modify this data!
+          </p>
         </div>
-    );
+        <CodeMirror
+          value={code}
+          readOnly={true}
+          typeof="jsonl"
+          theme={vscodeDark}
+          height="600px"
+          className="w-5/6 sm:w-4/6 h-4/6 ring-1 ring-blue-500"
+        />
+      </div>
+      <BottomHeader />
+    </div>
+  );
 }
 
 export default DataPage;
