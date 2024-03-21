@@ -1,5 +1,7 @@
 from django.db import models
 
+
+#This model will contain each stock and its sentiment and when that aquired
 class StockSentiment(models.Model):
     stock = models.CharField(max_length=50)
     sentiment = models.CharField(max_length=100)
@@ -11,7 +13,8 @@ class StockSentiment(models.Model):
     class Meta:
         app_label = 'server'
 
-class tickerStat(models.Model):
+#This will contained the time a stock has been mentioned to create some basic pie charts
+class TickerStats(models.Model):
     stock = models.CharField(max_length=50, unique=True)
     mentions = models.IntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
@@ -22,6 +25,7 @@ class tickerStat(models.Model):
     class Meta:
         app_label = 'server'
 
+#This model will contain the analysis/summary for each user's post. Goal is to have a daily report page.
 class PostAnalysis(models.Model):
     # Define fields for your AnotherModel
     stock = models.CharField(max_length=50)
