@@ -45,3 +45,18 @@ class DateRangeStockSentimentView(View):
         }
             
         return JsonResponse(data)
+    
+class StockStats(View):
+    def get(self, request):
+        
+        starting_date = request.GET.get('starting_date')
+
+        records_in_range = StockSentiment.objects.filter(created_at__range=[starting_date,timezone.now()])
+
+        stocks_in_range = [(record.stock, record.sentiment, record.created_at) for record in records_in_range]
+
+        data = {
+            'stock_sentiments': stocks_in_range
+        }
+            
+        return JsonResponse(data)
