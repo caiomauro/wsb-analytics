@@ -1,26 +1,25 @@
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",
-    "title": "User Post Initial Analysis",
-    "type": "object",
-    "properties": {
-      "stock": {
-        "type": "string",
-        "description": "The ticker for the stock mentioned"
-      },
-      "news":{
-        "type": "string",
-        "description": "Detailed report on any news that the user shared about the mentioned stock"
-      },
-      "sentiment": {
-        "type": "string",
-        "description": "A string for the general sentiment that the user has about the stock"
-      }
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "User Post Initial Analysis",
+  "type": "object",
+  "properties": {
+    "ticker": {
+      "type": "string",
+      "description": "Strictly the ticker for the stock/crypto mentioned in all caps"
     },
-    "required": [
-      "stock","news","sentiment"
-    ]
+    "summary":{
+      "type": "string",
+      "description": "Detailed summary about what the use shared about the mentioned stock"
+    },
+    "sentiment": {
+      "type": "string",
+      "description": "A string for the general sentiment that the user has about the stock"
+    }
+  },
+  "required": [
+    "stock","news","sentiment"
+  ]
 }
-
 
   {
     "$schema": "http://json-schema.org/draft-07/schema#",
