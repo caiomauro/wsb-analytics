@@ -29,6 +29,7 @@ class TickerStats(models.Model):
 class PostAnalysis(models.Model):
     # Define fields for your AnotherModel
     stock = models.CharField(max_length=50)
+    prospect = models.CharField(max_length=500)
     summary = models.CharField(max_length=500)
     sentiment = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)

@@ -23,14 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-ihn#5zfw7lf8=^1p_e+$lvmsz(mg-a^6*2fk1i-ni26%1t!77e"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ["wsb-analytics-server.ue.r.appspot.com"]
-
-SECURE_SSL_REDIRECT = True
-
-SECURE_SSL_CERTIFICATE = '/server/server.crt'
-SECURE_SSL_KEY = '/server/server.key'
+ALLOWED_HOSTS = ["wsb-analytics-server.ue.r.appspot.com","127.0.0.1"]
 
 # Application definition
 
@@ -46,6 +41,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -53,7 +49,6 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    'corsheaders.middleware.CorsMiddleware',
 ]
 
 CORS_ALLOWED_ORIGINS = [
@@ -61,7 +56,7 @@ CORS_ALLOWED_ORIGINS = [
     'http://192.168.1.107:3000',
     'http://192.168.1.177',
     'https://wsb-analytics.vercel.app',
-    'https://www.wsbanalytics.pro'
+    'https://www.wsbanalytics.pro',
 ]
 
 ROOT_URLCONF = "server.urls"

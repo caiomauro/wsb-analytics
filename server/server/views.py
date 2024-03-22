@@ -4,7 +4,7 @@ from django.http import JsonResponse
 from django.utils import timezone
 from django.views import View
 
-from .models import StockSentiment
+from .models import StockSentiment, TickerStats, PostAnalysis
 
 
 class StockSentimentView(View):
@@ -46,17 +46,32 @@ class DateRangeStockSentimentView(View):
             
         return JsonResponse(data)
     
-class StockStats(View):
+class NumStockStats(View):
     def get(self, request):
         
-        starting_date = request.GET.get('starting_date')
+        number = request.GET.get('number')
 
-        records_in_range = StockSentiment.objects.filter(created_at__range=[starting_date,timezone.now()])
+        records = TickerStats.objects.order_by('-mentions')[:number]
 
-        stocks_in_range = [(record.stock, record.sentiment, record.created_at) for record in records_in_range]
+        stock_mentions = [(record.stock, record.mentions) for record in records]
 
         data = {
-            'stock_sentiments': stocks_in_range
+            'stock_mentions': stock_mentions
+        }
+            
+        return JsonResponse(data)
+
+class SpecificStockStats(View):
+    def get(self, request):
+        
+        stock = request.GET.get('stock')
+
+        records = TickerStats.objects.get(stock=stock)
+
+        stock_stat = [(record.stock, record.mentions) for record in records]
+
+        data = {
+            'stock_stat': stock_stat
         }
             
         return JsonResponse(data)
