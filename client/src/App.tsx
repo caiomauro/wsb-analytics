@@ -2,8 +2,8 @@ import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import './App.css';
 import { NavbarProvider } from './Context/NavbarContext';
 import AnalyticsPage from './Pages/AnalyticsPage';
-import HomePage from "./Pages/HomePage";
 import DataPage from './Pages/DataPage';
+import HomePage from "./Pages/HomePage";
 
 function App() {
   return (
