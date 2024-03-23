@@ -5,15 +5,18 @@ import MyResponsiveBar from "../Components/MyResponsiveBar";
 import MyResponsiveBarMobile from "../Components/MyResponsiveBarMobile";
 import MyResponsiveTimelineBar from "../Components/MyResponsiveTimelineBar";
 import MyResponsiveTimelineBarMobile from "../Components/MyResponsiveTimelineBarMobile";
+import MyResponsivePie from "../Components/MyResponsivePie";
 import Navbar from "../Components/Navbar";
 import { fetchAllStockMentions, fetchData, fetchDataRange, fetchLimitStockMentions, fetchStocksMention } from "../Services/ServerApi";
 import getPreviousWeekStartDate from "../Utils/PreviousWeekStrUtil";
 import visualizationTimeline from "../Utils/VisualizationTimelineUtil";
 import visualization from "../Utils/VisualizationUtil";
+import visualizationPieChart from "../Utils/VisualizationPieUtil";
 
 function AnalyticsPage() {
   const [data, setData] = useState<graph_data[]>([]);
   const [rangeData, setRangeData] = useState<timeline_data[]>([]);
+  const [pieData, setPieData] = useState<pie_data[]>([]);
   const [isTooLarge, setIsTooLarge] = useState(false);
   const [stock, setStock] = useState("NVDA");
   const [allStocks, setAllStocks] = useState<string[]>([]);
@@ -24,9 +27,8 @@ function AnalyticsPage() {
       setIsTooLarge(window.innerWidth > 1337);
     }
 
-    fetchAllStockMentions().then(( allStockMentions ) => {
-      // Use the returned data here
-      console.log(allStockMentions)
+    fetchAllStockMentions().then(( allStockMentions  ) => {
+      setPieData(visualizationPieChart(allStockMentions.allStockMentions));
     })
 
     fetchLimitStockMentions(3).then(( limitStockMentions ) => {
@@ -65,6 +67,13 @@ function AnalyticsPage() {
     mixed: number;
     mixedColor: string;
   };
+
+  type pie_data = {
+    stock: string
+    label: string
+    value: number
+    color: string
+}
 
   const symbols: TickerSymbol[] = [
     {
@@ -205,7 +214,11 @@ function AnalyticsPage() {
               )}
         </div>
       </div>
-      <div id="pie-chart"></div>
+      <div 
+      id="pie-chart"
+      className="flex flex-col h-128 w-full sm:h-128 sm:w-4/6 sm:mx-auto pl-4">
+        <MyResponsivePie data={pieData} />
+      </div>
       <BottomHeader />
     </div>
   );

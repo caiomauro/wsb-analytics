@@ -54,7 +54,7 @@ const fetchDataRange = (stock: string, range: string, days: number): Promise<{ s
     });
 };
 
-const fetchAllStockMentions = (): Promise<{}> => {
+const fetchAllStockMentions = (): Promise<{ allStockMentions: any[] }> => {
     return new Promise((resolve, reject) => {
         fetch(
         `http://127.0.0.1:8000/api/stock-mentions/`

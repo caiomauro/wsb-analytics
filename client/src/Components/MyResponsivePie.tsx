@@ -1,15 +1,20 @@
-// install (please try to align the version of installed @nivo packages)
-// yarn add @nivo/pie
 import { ResponsivePie } from '@nivo/pie';
 
-// make sure parent container have a defined height when using
-// responsive component, otherwise height will be 0 and
-// no chart will be rendered.
-// website examples showcase many properties,
-// you'll often use just a few of them.
-const MyResponsivePie = ({ data }) => (
+type pie_data = {
+    stock: string;
+    label: string;
+    value: number;
+    color: string;
+}
+
+interface MyResponsivePieProps {
+    data: pie_data[]
+}
+
+const MyResponsivePie: React.FC<MyResponsivePieProps> = ({ data }) => (
     <ResponsivePie
         data={data}
+        id="stock"
         margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
         innerRadius={0.5}
         padAngle={0.7}
@@ -135,6 +140,15 @@ const MyResponsivePie = ({ data }) => (
                 ]
             }
         ]}
+        tooltip={( data ) => {
+            return (
+              <div className="flex flex-row bg-white p-1 px-2 rounded-md text-black">
+                <p>
+                {data.datum.id}: <span className="font-bold italic">{data.datum.value}</span>
+                </p>
+              </div>
+            );
+          }}
     />
 )
 
