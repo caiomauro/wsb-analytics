@@ -3,15 +3,15 @@ import { TickerSymbol, TickerTape } from "react-ts-tradingview-widgets";
 import BottomHeader from "../Components/BottomHeader";
 import MyResponsiveBar from "../Components/MyResponsiveBar";
 import MyResponsiveBarMobile from "../Components/MyResponsiveBarMobile";
+import MyResponsivePie from "../Components/MyResponsivePie";
 import MyResponsiveTimelineBar from "../Components/MyResponsiveTimelineBar";
 import MyResponsiveTimelineBarMobile from "../Components/MyResponsiveTimelineBarMobile";
-import MyResponsivePie from "../Components/MyResponsivePie";
 import Navbar from "../Components/Navbar";
-import { fetchAllStockMentions, fetchData, fetchDataRange, fetchLimitStockMentions, fetchStocksMention } from "../Services/ServerApi";
+import { fetchData, fetchDataRange, fetchLimitStockMentions } from "../Services/ServerApi";
 import getPreviousWeekStartDate from "../Utils/PreviousWeekStrUtil";
+import visualizationPieChart from "../Utils/VisualizationPieUtil";
 import visualizationTimeline from "../Utils/VisualizationTimelineUtil";
 import visualization from "../Utils/VisualizationUtil";
-import visualizationPieChart from "../Utils/VisualizationPieUtil";
 
 function AnalyticsPage() {
   const [data, setData] = useState<graph_data[]>([]);
@@ -27,18 +27,22 @@ function AnalyticsPage() {
       setIsTooLarge(window.innerWidth > 1337);
     }
 
-    fetchAllStockMentions().then(( allStockMentions  ) => {
-      setPieData(visualizationPieChart(allStockMentions.allStockMentions));
+    fetchData(10000, 10).then(({ sortedStocks, stockSentiments, entries }) => {
+      setAllStocks(sortedStocks);
+      setData(visualization(stockSentiments, entries));
+    });
+
+    fetchLimitStockMentions(10).then(( limitStockMentions ) => {
+      setPieData(visualizationPieChart(limitStockMentions.limitStockMentions));
     })
 
-    fetchLimitStockMentions(3).then(( limitStockMentions ) => {
-      console.log(limitStockMentions);
+    fetchDataRange("NVDA",getPreviousWeekStartDate(), 1).then(({ stockSentiments, days, stock }) => {
+      setRangeData(visualizationTimeline(stock, stockSentiments, days));
     })
-
-    fetchStocksMention("NVDA").then(( stocksMention ) => {
-      console.log(stocksMention);
-    })
-
+    .catch((error) => {
+      console.error("Error fetching data:", error);
+    });
+    
     handleResize();
 
     window.addEventListener("resize", handleResize);
@@ -164,7 +168,13 @@ function AnalyticsPage() {
             : data.length > 0 && <MyResponsiveBarMobile data={data} />}
         </div>
 
-        <div className="w-5/6 sm:w-4/6 flex flex-row justify-between items-center sm:pt-20">
+      <div 
+      id="pie-chart"
+      className="flex flex-col h-128 w-full sm:h-128 sm:w-4/6 sm:mx-auto pl-4 sm:pt-20">
+        <MyResponsivePie data={pieData} />
+      </div>
+
+      <div className="w-5/6 sm:w-4/6 flex flex-row justify-between items-center sm:pt-20">
           <p className="text-white text-lg sm:text-2xl">
             Currently viewing:{" "}
             <span className="font-bold text-blue-500">{stock}</span>
@@ -213,11 +223,6 @@ function AnalyticsPage() {
                 <MyResponsiveTimelineBarMobile data={rangeData} />
               )}
         </div>
-      </div>
-      <div 
-      id="pie-chart"
-      className="flex flex-col h-128 w-full sm:h-128 sm:w-4/6 sm:mx-auto pl-4">
-        <MyResponsivePie data={pieData} />
       </div>
       <BottomHeader />
     </div>

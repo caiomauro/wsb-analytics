@@ -17,6 +17,7 @@ const MyResponsivePie: React.FC<MyResponsivePieProps> = ({ data }) => (
         id="stock"
         margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
         innerRadius={0.5}
+        enableArcLabels={false}
         padAngle={0.7}
         cornerRadius={3}
         activeOuterRadiusOffset={8}
@@ -32,7 +33,7 @@ const MyResponsivePie: React.FC<MyResponsivePieProps> = ({ data }) => (
             ]
         }}
         arcLinkLabelsSkipAngle={10}
-        arcLinkLabelsTextColor="#333333"
+        arcLinkLabelsTextColor="#ffffff"
         arcLinkLabelsThickness={2}
         arcLinkLabelsColor={{ from: 'color' }}
         arcLabelsSkipAngle={10}
@@ -68,7 +69,7 @@ const MyResponsivePie: React.FC<MyResponsivePieProps> = ({ data }) => (
         fill={[
             {
                 match: {
-                    id: 'ruby'
+                    value: 4
                 },
                 id: 'dots'
             },
@@ -115,34 +116,9 @@ const MyResponsivePie: React.FC<MyResponsivePieProps> = ({ data }) => (
                 id: 'lines'
             }
         ]}
-        legends={[
-            {
-                anchor: 'bottom',
-                direction: 'row',
-                justify: false,
-                translateX: 0,
-                translateY: 56,
-                itemsSpacing: 0,
-                itemWidth: 100,
-                itemHeight: 18,
-                itemTextColor: '#999',
-                itemDirection: 'left-to-right',
-                itemOpacity: 1,
-                symbolSize: 18,
-                symbolShape: 'circle',
-                effects: [
-                    {
-                        on: 'hover',
-                        style: {
-                            itemTextColor: '#000'
-                        }
-                    }
-                ]
-            }
-        ]}
         tooltip={( data ) => {
             return (
-              <div className="flex flex-row bg-white p-1 px-2 rounded-md text-black">
+              <div className="flex flex-row bg-white p-1 px-2 rounded-md text-black ring-1 ring-amber-300">
                 <p>
                 {data.datum.id}: <span className="font-bold italic">{data.datum.value}</span>
                 </p>

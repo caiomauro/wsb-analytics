@@ -10,7 +10,6 @@ const visualizationPieChart = (data: any) => {
     const final_data: any[] = []
 
     for (let i = 0; i < data.length; i++) {
-        console.log(data[i][0])
         const pie_object: pie_data[] = [
             {
                 stock: data[i][0],
