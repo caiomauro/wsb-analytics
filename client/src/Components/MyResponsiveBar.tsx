@@ -24,7 +24,7 @@ const MyResponsiveBar: React.FC<MyResponsiveBarProps> = ({ data }) => (
       padding={0.3}
       valueScale={{ type: "linear" }}
       indexScale={{ type: "band", round: true }}
-      colors={["#22ff00", "#ff0000", "#ffcc00"]}
+      colors={["#b3c8ff", "#0046ff", "#6690ff"]}
       colorBy="id"
       borderColor={{ from: "color", modifiers: [["darker", 1.6]] }}
       axisTop={null}

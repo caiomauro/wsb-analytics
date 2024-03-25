@@ -33,7 +33,7 @@ function AnalyticsPage() {
     });
 
     fetchLimitStockMentions(10).then(( limitStockMentions ) => {
-      setPieData(visualizationPieChart(limitStockMentions.limitStockMentions));
+      setPieData(visualizationPieChart(limitStockMentions.limitStockMentions.reverse()));
     })
 
     fetchDataRange("NVDA",getPreviousWeekStartDate(), 1).then(({ stockSentiments, days, stock }) => {
@@ -104,6 +104,10 @@ function AnalyticsPage() {
       proName: "NYSE:PATH",
       title: "PATH",
     },
+    {
+      proName: "NYSE:PATH",
+      title: "RDDT",
+    },
   ];
 
   return (
@@ -118,6 +122,7 @@ function AnalyticsPage() {
           symbols={symbols}
           isTransparent={true}
         ></TickerTape>
+        <h1>Sentiment Analysis</h1>
         <div
           id="count-button-container"
           className="flex flex-row w-full sm:w-2/4 justify-around item-center pt-8"
@@ -170,7 +175,7 @@ function AnalyticsPage() {
 
       <div 
       id="pie-chart"
-      className="flex flex-col h-128 w-full sm:h-128 sm:w-4/6 sm:mx-auto pl-4 sm:pt-20">
+      className="flex flex-col h-80 w-full sm:h-202 sm:w-4/6 sm:mx-auto pl-4 sm:pt-20 items-center">
         <MyResponsivePie data={pieData} />
       </div>
 

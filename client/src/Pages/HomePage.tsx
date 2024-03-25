@@ -145,14 +145,14 @@ function HomePage() {
             className="flex flex-col w-5/6 sm:w-4/6 justify-around sm:gap-16"
           >
             <h1 className="pb-3 text-center text-2xl sm:text-5xl font-thin">
-              A robust LLM fine-tuned on{" "}
+              Supported by a robust AI model {" "}
               <span className="text-blue-500 text-3xl sm:text-5xl font-normal bg-gradient-to-r from-cyan-500 to-blue-500 text-transparent bg-clip-text">
-                hundreds
+                fine-tuned
               </span>{" "}
-              of lines of private data.
+              on private curated data.
             </h1>
             <h1 className="pb-3 text-center text-2xl sm:text-5xl font-thin">
-              Analyzing{" "}
+              Performing sentiment analysis on{" "}
               <span className="text-blue-500 text-3xl sm:text-5xl font-normal bg-gradient-to-r from-cyan-500 to-blue-500 text-transparent bg-clip-text">
                 countless
               </span>{" "}

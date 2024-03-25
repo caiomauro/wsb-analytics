@@ -1,4 +1,5 @@
 import { ResponsivePie } from '@nivo/pie';
+import theme from "../Constants/BarTheme"
 
 type pie_data = {
     stock: string;
@@ -18,6 +19,7 @@ const MyResponsivePie: React.FC<MyResponsivePieProps> = ({ data }) => (
         margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
         innerRadius={0.5}
         enableArcLabels={false}
+        theme={theme}
         padAngle={0.7}
         cornerRadius={3}
         activeOuterRadiusOffset={8}
@@ -32,7 +34,7 @@ const MyResponsivePie: React.FC<MyResponsivePieProps> = ({ data }) => (
                 ]
             ]
         }}
-        arcLinkLabelsSkipAngle={10}
+        arcLinkLabelsSkipAngle={20}
         arcLinkLabelsTextColor="#ffffff"
         arcLinkLabelsThickness={2}
         arcLinkLabelsColor={{ from: 'color' }}
@@ -69,7 +71,7 @@ const MyResponsivePie: React.FC<MyResponsivePieProps> = ({ data }) => (
         fill={[
             {
                 match: {
-                    value: 4
+                    value: 'c'
                 },
                 id: 'dots'
             },
@@ -120,7 +122,7 @@ const MyResponsivePie: React.FC<MyResponsivePieProps> = ({ data }) => (
             return (
               <div className="flex flex-row bg-white p-1 px-2 rounded-md text-black ring-1 ring-amber-300">
                 <p>
-                {data.datum.id}: <span className="font-bold italic">{data.datum.value}</span>
+                {data.datum.id}: <span className="font-bold italic">{data.datum.value} mention(s)</span>
                 </p>
               </div>
             );
