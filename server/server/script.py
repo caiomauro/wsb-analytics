@@ -33,7 +33,7 @@ def get_data():
     post_analysis = []
 
     #Number of posts to pull
-    scraped_posts = 50
+    scraped_posts = 200
 
     #Filter keywords
     buy_keywords = [
@@ -218,9 +218,6 @@ def get_data():
     print(post_analysis) 
 
     return([stock_sentiment, post_analysis])
-
-
-get_data()
 
 """
 #EXPORT TO CSV, may be useful later
