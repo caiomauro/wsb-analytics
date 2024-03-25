@@ -1,7 +1,7 @@
 
 const fetchData = (count: number, entries: number): Promise<{ sortedStocks: string[], stockSentiments: any[], entries: number }> => {
     return new Promise((resolve, reject) => {
-        fetch(`http://127.0.0.1:8000/api/sentiment-pairs/?count=${count}`)
+        fetch(`https://wsb-analytics-server.ue.r.appspot.com/api/sentiment-pairs/?count=${count}`)
         .then((response) => {
             if (!response.ok) {
             throw new Error("Network response was not ok");
@@ -36,7 +36,7 @@ const fetchData = (count: number, entries: number): Promise<{ sortedStocks: stri
 const fetchDataRange = (stock: string, range: string, days: number): Promise<{ stockSentiments: any[], days: number, stock: string }> => {
     return new Promise((resolve, reject) => {
         fetch(
-        `http://127.0.0.1:8000/api/sentiment-pairs/range/?starting_date=${range}`
+        `https://wsb-analytics-server.ue.r.appspot.com/api/sentiment-pairs/range/?starting_date=${range}`
         )
         .then((response) => {
             if (!response.ok) {
@@ -57,7 +57,7 @@ const fetchDataRange = (stock: string, range: string, days: number): Promise<{ s
 const fetchAllStockMentions = (): Promise<{ allStockMentions: any[] }> => {
     return new Promise((resolve, reject) => {
         fetch(
-        `http://127.0.0.1:8000/api/stock-mentions/`
+        `https://wsb-analytics-server.ue.r.appspot.com/api/stock-mentions/`
         )
         .then((response) => {
             if (!response.ok) {
@@ -78,7 +78,7 @@ const fetchAllStockMentions = (): Promise<{ allStockMentions: any[] }> => {
 const fetchLimitStockMentions = ( limit: number ): Promise<{ limitStockMentions: any[] }> => {
     return new Promise((resolve, reject) => {
         fetch(
-        `http://127.0.0.1:8000/api/stock-mentions/limit/?limit=${limit}`
+        `https://wsb-analytics-server.ue.r.appspot.com/api/stock-mentions/limit/?limit=${limit}`
         )
         .then((response) => {
             if (!response.ok) {
@@ -99,7 +99,7 @@ const fetchLimitStockMentions = ( limit: number ): Promise<{ limitStockMentions:
 const fetchStocksMention = ( stock: string ): Promise<{ stocksMention: any[] }> => {
     return new Promise((resolve, reject) => {
         fetch(
-        `http://127.0.0.1:8000/api/stock-mentions/stock/?stock=${stock}`
+        `https://wsb-analytics-server.ue.r.appspot.com/api/stock-mentions/stock/?stock=${stock}`
         )
         .then((response) => {
             if (!response.ok) {
