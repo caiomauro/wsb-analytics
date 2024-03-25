@@ -4,9 +4,10 @@ from django.http import JsonResponse
 from django.utils import timezone
 from django.views import View
 
-from .models import StockSentiment
+from .models import PostAnalysis, StockSentiment, TickerStats
 
 
+#Sentiment Pair Views from stock_sentiments table
 class StockSentimentView(View):
     def get(self, request):
         # Retrieve the query parameter 'count' indicating the number of records to retrieve
@@ -42,6 +43,49 @@ class DateRangeStockSentimentView(View):
 
         data = {
             'stock_sentiments': stocks_in_range
+        }
+            
+        return JsonResponse(data)
+    
+class AllStockMentions(View):
+    def get(self, request):
+
+        records = TickerStats.objects.order_by('-mentions')
+
+        stock_mentions = [(record.stock, record.mentions) for record in records]
+
+        data = {
+            'stock_mentions': stock_mentions
+        }
+            
+        return JsonResponse(data)
+
+class LimitStockMentions(View):
+    def get(self, request):
+        
+        number = int(request.GET.get('limit'))
+
+        records = TickerStats.objects.order_by('-mentions')[:number]
+
+        stock_mentions = [(record.stock, record.mentions) for record in records]
+
+        data = {
+            'stock_mentions': stock_mentions
+        }
+            
+        return JsonResponse(data)
+
+class SpecificStockMentions(View):
+    def get(self, request):
+        
+        stock = request.GET.get('stock')
+
+        records = TickerStats.objects.get(stock=stock)
+
+        stock_stat = (records.stock, records.mentions)
+
+        data = {
+            'stock_stat': stock_stat
         }
             
         return JsonResponse(data)

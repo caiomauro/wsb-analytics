@@ -17,10 +17,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from .views import DateRangeStockSentimentView, StockSentimentView
+from .views import (AllStockMentions, DateRangeStockSentimentView,
+                    LimitStockMentions, SpecificStockMentions,
+                    StockSentimentView)
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path('api/stock-sentiments/', StockSentimentView.as_view(), name='stock_sentiment'),
-    path('api/stock-sentiments/range/', DateRangeStockSentimentView.as_view(), name='stock_sentiment_range')
+    path('api/sentiment-pairs/', StockSentimentView.as_view(), name='stock_sentiment'),
+    path('api/sentiment-pairs/range/', DateRangeStockSentimentView.as_view(), name='stock_sentiment_range'),
+    path('api/stock-mentions/', AllStockMentions.as_view(), name="stock_mentions"),
+    path('api/stock-mentions/limit/', LimitStockMentions.as_view(), name="stock_mentions_limit"),
+    path('api/stock-mentions/stock/', SpecificStockMentions.as_view(), name="stock_mentions_stock")
 ]

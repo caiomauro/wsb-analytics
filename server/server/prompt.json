@@ -1,0 +1,94 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "User Post Initial Analysis",
+  "type": "object",
+  "properties": {
+    "ticker": {
+      "type": "string",
+      "description": "Strictly the ticker for the stock/crypto mentioned in all caps"
+    },
+    "summary":{
+      "type": "string",
+      "description": "Detailed summary about what the use shared about the mentioned stock"
+    },
+    "sentiment": {
+      "type": "string",
+      "description": "A string for the general sentiment that the user has about the stock"
+    }
+  },
+  "required": [
+    "stock","news","sentiment"
+  ]
+}
+
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "User Post Initial Analysis",
+  "type": "object",
+  "properties": {
+    "ticker": {
+      "type": "string",
+      "description": "If the user mentions a stock, place it's ticker here."
+    },
+    "prospect": {
+          "type": "string",
+          "description": "Here you will deliberately state if the user is going to buy the stock or if they are going to sell it. Keep this very short."
+    },
+    "summary":{
+      "type": "string",
+      "description": "Wrote a detailed summary about what the user shared."
+    },
+    "sentiment": {
+      "type": "string",
+      "description": "Here you will determine the general sentiment the user has for the stock. Please make it positive, negative, mixed or neutral."
+    }
+  },
+  "required": [
+    "ticker", "news", "prospect", "sentiment"
+  ]
+}
+
+  {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Game of Thrones Character",
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string",
+        "description": "Full name of the character"
+      },
+      "aliases": {
+        "type": "array",
+        "description": "Array of nicknames or alternative names",
+        "items": {
+          "type": "string"
+        }
+      },
+      "title": {
+        "type": "string",
+        "description": "Current or most prominent title (e.g., King, Hand of the King)"
+      },
+      "family": {
+        "type": "string",
+        "description": "House or family affiliation (e.g., Stark, Lannister)"
+      },
+      "culture": {
+        "type": "string",
+        "description": "Cultural background (e.g., Andal, Dothraki)"
+      },
+      "died": {
+        "type": "boolean",
+        "description": "Whether the character is deceased"
+      },
+      "diedInSeason": {
+        "type": "integer",
+        "description": "Season number in which the character died (if applicable)",
+        "minimum": 1
+      },
+      "playedBy": {
+        "type": "string",
+        "description": "Actor who portrayed the character"
+      }
+    },
+    "required": ["name", "family"]
+  }

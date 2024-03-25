@@ -56,7 +56,7 @@ function Navbar() {
                     </div>
                     <div id="link-div" className={`flex flex-row w-full justify-between items-center p-2 pr-4 sm:col-span-1 ${isMenuOpen ? '' : 'hidden'}`}>
                         <a href="/" className={`${activePage === "/" ? "font-bold" : "font-normal"}`} onClick={() => handleSetActivePage("/")}>Home</a>
-                        <a href="/analytics" className={`${activePage === "/analytics" ? "font-bold":"font-normal"}`} onClick={() => handleSetActivePage("/analytics")}>Analytics</a>
+                        <a href="/analytics" className={`${activePage === "/analytics/bars" ? "font-bold":"font-normal"}`} onClick={() => handleSetActivePage("/analytics")}>Analytics</a>
                         <a href="/data" className={`${activePage === "/data" ? "font-bold" :"font-normal"}`} onClick={() => handleSetActivePage("/data")}>Data</a>
                         <a href="https://github.com/caiomauro/wsb-analytics" target="_blank" className={`${activePage === "/github" ? "font-bold" : "font-normal"}`} onClick={() => handleSetActivePage("/github")} rel="noreferrer">Github</a>
                     </div>

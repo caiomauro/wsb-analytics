@@ -27,11 +27,6 @@ DEBUG = False
 
 ALLOWED_HOSTS = ["wsb-analytics-server.ue.r.appspot.com"]
 
-SECURE_SSL_REDIRECT = True
-
-SECURE_SSL_CERTIFICATE = '/server/server.crt'
-SECURE_SSL_KEY = '/server/server.key'
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -53,7 +48,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    'corsheaders.middleware.CorsMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
 ]
 
 CORS_ALLOWED_ORIGINS = [
@@ -61,7 +56,8 @@ CORS_ALLOWED_ORIGINS = [
     'http://192.168.1.107:3000',
     'http://192.168.1.177',
     'https://wsb-analytics.vercel.app',
-    'https://www.wsbanalytics.pro'
+    'https://www.wsbanalytics.pro',
+    'https://resttesttest.com'
 ]
 
 ROOT_URLCONF = "server.urls"
