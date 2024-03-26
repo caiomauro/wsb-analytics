@@ -1,17 +1,19 @@
-import { useEffect, useState } from "react";
-import { TickerSymbol, TickerTape } from "react-ts-tradingview-widgets";
+import { Suspense, lazy, useEffect, useState } from "react";
+import { TickerTape } from "react-ts-tradingview-widgets";
 import BottomHeader from "../Components/BottomHeader";
-import MyResponsiveBar from "../Components/MyResponsiveBar";
-import MyResponsiveBarMobile from "../Components/MyResponsiveBarMobile";
-import MyResponsivePie from "../Components/MyResponsivePie";
-import MyResponsiveTimelineBar from "../Components/MyResponsiveTimelineBar";
-import MyResponsiveTimelineBarMobile from "../Components/MyResponsiveTimelineBarMobile";
 import Navbar from "../Components/Navbar";
 import { fetchData, fetchDataRange, fetchLimitStockMentions } from "../Services/ServerApi";
 import getPreviousWeekStartDate from "../Utils/PreviousWeekStrUtil";
 import visualizationPieChart from "../Utils/VisualizationPieUtil";
 import visualizationTimeline from "../Utils/VisualizationTimelineUtil";
 import visualization from "../Utils/VisualizationUtil";
+
+// Lazy load chart components
+const MyResponsiveBar = lazy(() => import("../Components/MyResponsiveBar"));
+const MyResponsiveBarMobile = lazy(() => import("../Components/MyResponsiveBarMobile"));
+const MyResponsivePie = lazy(() => import("../Components/MyResponsivePie"));
+const MyResponsiveTimelineBar = lazy(() => import("../Components/MyResponsiveTimelineBar"));
+const MyResponsiveTimelineBarMobile = lazy(() => import("../Components/MyResponsiveTimelineBarMobile"));
 
 function AnalyticsPage() {
   const [data, setData] = useState<graph_data[]>([]);
@@ -79,36 +81,15 @@ function AnalyticsPage() {
     color: string
 }
 
-  const symbols: TickerSymbol[] = [
-    {
-      proName: "NASDAQ:NVDA",
-      title: "NVDA",
-    },
-    {
-      proName: "AMEX:SPY",
-      title: "SPY",
-    },
-    {
-      proName: "NASDAQ:TSLA",
-      title: "TSLA",
-    },
-    {
-      proName: "NASDAQ:AMD",
-      title: "AMD",
-    },
-    {
-      proName: "NYSE:TSM",
-      title: "TSM",
-    },
-    {
-      proName: "NYSE:PATH",
-      title: "PATH",
-    },
-    {
-      proName: "NYSE:PATH",
-      title: "RDDT",
-    },
-  ];
+const symbols = [
+  { proName: "NASDAQ:NVDA", title: "NVDA" },
+  { proName: "AMEX:SPY", title: "SPY" },
+  { proName: "NASDAQ:TSLA", title: "TSLA" },
+  { proName: "NASDAQ:AMD", title: "AMD" },
+  { proName: "NYSE:TSM", title: "TSM" },
+  { proName: "NYSE:PATH", title: "PATH" },
+  { proName: "NYSE:RDDT", title: "RDDT" }
+];
 
   return (
     <div className="flex flex-col w-full h-full custom-background-img-mobile sm:custom-background-img-desktop">
@@ -168,15 +149,19 @@ function AnalyticsPage() {
           id="count-container"
           className="flex flex-col h-128 w-full sm:h-128 sm:w-4/6 sm:mx-auto pl-4"
         >
-          {isTooLarge
-            ? data.length > 0 && <MyResponsiveBar data={data} />
-            : data.length > 0 && <MyResponsiveBarMobile data={data} />}
+          <Suspense fallback={<div>Loading...</div>}>
+            {isTooLarge
+              ? data.length > 0 && <MyResponsiveBar data={data} />
+              : data.length > 0 && <MyResponsiveBarMobile data={data} />}
+          </Suspense>
         </div>
 
       <div 
       id="pie-chart"
       className="flex flex-col h-80 w-full sm:h-202 sm:w-4/6 sm:mx-auto pl-4 sm:pt-20 items-center">
-        <MyResponsivePie data={pieData} />
+        <Suspense fallback={<div>Loading...</div>}>
+          <MyResponsivePie data={pieData} />
+        </Suspense>
       </div>
 
       <div className="w-5/6 sm:w-4/6 flex flex-row justify-between items-center sm:pt-20">
@@ -220,13 +205,15 @@ function AnalyticsPage() {
           id="count-container"
           className="flex flex-col h-128 w-full sm:h-128 sm:w-4/6 pl-4 sm:mx-auto "
         >
-          {isTooLarge
-            ? rangeData.length > 0 && (
-                <MyResponsiveTimelineBar data={rangeData} />
-              )
-            : rangeData.length > 0 && (
-                <MyResponsiveTimelineBarMobile data={rangeData} />
-              )}
+          <Suspense fallback={<div>Loading...</div>}>
+            {isTooLarge
+              ? rangeData.length > 0 && (
+                  <MyResponsiveTimelineBar data={rangeData} />
+                )
+              : rangeData.length > 0 && (
+                  <MyResponsiveTimelineBarMobile data={rangeData} />
+                )}
+          </Suspense>
         </div>
       </div>
       <BottomHeader />
