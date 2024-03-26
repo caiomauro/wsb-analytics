@@ -33,7 +33,11 @@ def get_data():
     post_analysis = []
 
     #Number of posts to pull
+<<<<<<< Updated upstream
     scraped_posts = 50
+=======
+    scraped_posts = 800
+>>>>>>> Stashed changes
 
     #Filter keywords
     buy_keywords = [
@@ -187,17 +191,21 @@ def get_data():
         print("Analysis: ")
         data = analyze_post(value, index)
         if data and "ticker" in data and "sentiment" in data:
-            if data["ticker"] and len(data["ticker"]) > 0 and data["ticker"].upper() in tickers and data["sentiment"].lower() in valid_sentiments:
-                stock_sentiment.append([data["ticker"].upper(),data["sentiment"].lower()])
-                post_analysis.append([data["ticker"].upper(), data["prospect"], data["summary"], data["sentiment"].lower()])
-                print(f"{bcolors.OKGREEN}This will be sent to the backend{bcolors.ENDC}")
-                count_sent += 1
-                print(data)
+            if isinstance(data["ticker"], str):
+                if data["ticker"] and len(data["ticker"]) > 0 and data["ticker"].upper() in tickers and data["sentiment"].lower() in valid_sentiments:
+                    stock_sentiment.append([data["ticker"].upper(),data["sentiment"].lower()])
+                    post_analysis.append([data["ticker"].upper(), data["prospect"], data["summary"], data["sentiment"].lower()])
+                    print(f"{bcolors.OKGREEN}This will be sent to the backend{bcolors.ENDC}")
+                    count_sent += 1
+                    print(data)
+                else:
+                    print(f"{bcolors.FAIL}This will not be sent to the backend{bcolors.ENDC}")
+                    count_blocked += 1
+                    print(data)
+                    continue
             else:
-                print(f"{bcolors.FAIL}This will not be sent to the backend{bcolors.ENDC}")
-                count_blocked += 1
-                print(data)
-                continue
+                # Handle case when ticker is not a string (it's a list)
+                print(f"{bcolors.WARNING}Skipping analysis because 'ticker' is not a string{bcolors.ENDC}")
         else:
             # Handle case when 'ticker' or 'sentiment' keys are missing in data dictionary
             print(f"{bcolors.FAIL}Missing 'ticker' or 'sentiment' key in data{bcolors.ENDC}")
