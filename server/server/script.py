@@ -33,11 +33,7 @@ def get_data():
     post_analysis = []
 
     #Number of posts to pull
-<<<<<<< Updated upstream
     scraped_posts = 50
-=======
-    scraped_posts = 800
->>>>>>> Stashed changes
 
     #Filter keywords
     buy_keywords = [
@@ -226,9 +222,6 @@ def get_data():
     print(post_analysis) 
 
     return([stock_sentiment, post_analysis])
-
-
-get_data()
 
 """
 #EXPORT TO CSV, may be useful later
