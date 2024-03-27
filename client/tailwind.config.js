@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./src/**/*.{html,js,tsx}","./node_modules/flowbite/**/*.{js,tsx}"],
+  content: ["./src/**/*.{html,js,tsx}"],
   theme: {
     extend: {
       spacing: {
@@ -10,7 +10,6 @@ module.exports = {
     }
   },
   plugins: [
-    require('flowbite/plugin')
   ],
 }
 
