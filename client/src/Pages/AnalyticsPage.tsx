@@ -24,14 +24,20 @@ function AnalyticsPage() {
 
 
   useEffect(() => {
+    const worker = new Worker(new URL('../Utils/VisualizationUtil', import.meta.url));
 
     function handleResize() {
       setIsTooLarge(window.innerWidth > 1337);
     }
 
+    worker.onmessage = (e) => {
+      setData(e.data);
+    };
+
     fetchData(10000, 10).then(({ sortedStocks, stockSentiments, entries }) => {
       setAllStocks(sortedStocks);
-      setData(visualization(stockSentiments, entries));
+      //setData(visualization(stockSentiments, entries));
+      worker.postMessage({ data: stockSentiments, entries });
     });
 
     fetchLimitStockMentions(10).then(( limitStockMentions ) => {
