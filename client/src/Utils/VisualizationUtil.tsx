@@ -7,12 +7,11 @@ type graph_data = {
     mixed: number;
     mixedColor: string;
   };
+  
 /* eslint-disable no-restricted-globals */
 self.onmessage = (e) => {
   const data = e.data.data;
   const entries = e.data.entries; // Extracting data and entries from the message;
-  console.log(entries);
-  console.log(data);
   try {
     const result = visualization(data, entries);
     self.postMessage(result);

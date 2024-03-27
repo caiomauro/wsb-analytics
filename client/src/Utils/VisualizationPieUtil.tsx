@@ -4,6 +4,16 @@ type pie_data = {
     value: number
     color: string
 }
+/* eslint-disable no-restricted-globals */
+self.onmessage = (e) => {
+    const data = e.data.data;
+    try {
+      const result = visualizationPieChart(data);
+      self.postMessage(result);
+    } catch (error) {
+      console.error("Error in visualization:", error);
+    }
+  }
 
 //Data [ticker, mentions]
 const visualizationPieChart = (data: any) => {

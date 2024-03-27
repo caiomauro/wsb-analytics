@@ -10,6 +10,23 @@ type timeline_data = {
     mixedColor: string;
   };
 
+  /* eslint-disable no-restricted-globals */
+self.onmessage = (e) => {
+  const data = e.data.data;
+  const stock = e.data.stock; // Extracting data and entries from the message;
+  const days = e.data.days;
+  console.log(days)
+  console.log(stock)
+  console.log(data)
+  try {
+    const result = visualizationTimeline(stock, data, days, );
+    self.postMessage(result);
+    console.log(result)
+  } catch (error) {
+    console.error("Error in visualization:", error);
+  }
+}
+
 const visualizationTimeline = (
     stock: string,
     data: Array<Array<string>>,

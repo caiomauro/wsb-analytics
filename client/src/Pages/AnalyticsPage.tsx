@@ -24,28 +24,40 @@ function AnalyticsPage() {
 
 
   useEffect(() => {
-    const worker = new Worker(new URL('../Utils/VisualizationUtil', import.meta.url));
+    const workerBar = new Worker(new URL('../Utils/VisualizationUtil', import.meta.url));
+    const workerBarTimeline = new Worker(new URL('../Utils/VisualizationTimelineUtil', import.meta.url));
+    const workerPie = new Worker(new URL('../Utils/VisualizationPieUtil', import.meta.url));
 
     function handleResize() {
       setIsTooLarge(window.innerWidth > 1337);
     }
 
-    worker.onmessage = (e) => {
+    workerBar.onmessage = (e) => {
       setData(e.data);
     };
+    
+    workerBarTimeline.onmessage = (e) => {
+      setRangeData(e.data);
+    }
+
+    workerPie.onmessage = (e) => {
+      setPieData(e.data);
+    }
 
     fetchData(10000, 10).then(({ sortedStocks, stockSentiments, entries }) => {
       setAllStocks(sortedStocks);
       //setData(visualization(stockSentiments, entries));
-      worker.postMessage({ data: stockSentiments, entries });
+      workerBar.postMessage({ data: stockSentiments, entries });
     });
 
     fetchLimitStockMentions(10).then(( limitStockMentions ) => {
-      setPieData(visualizationPieChart(limitStockMentions.limitStockMentions.reverse()));
+      //setPieData(visualizationPieChart(limitStockMentions.limitStockMentions.reverse()));
+      workerPie.postMessage({data: limitStockMentions.limitStockMentions.reverse()});
     })
 
     fetchDataRange("NVDA",getPreviousWeekStartDate(), 1).then(({ stockSentiments, days, stock }) => {
-      setRangeData(visualizationTimeline(stock, stockSentiments, days));
+      //setRangeData(visualizationTimeline(stock, stockSentiments, days));
+      workerBarTimeline.postMessage({ data: stockSentiments, days, stock });
     })
     .catch((error) => {
       console.error("Error fetching data:", error);
