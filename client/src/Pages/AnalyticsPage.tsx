@@ -25,7 +25,7 @@ function AnalyticsPage() {
 
 
   useEffect(() => {
-    
+    setLoading(true);
     setLoadingText("Establishing web-workers")
 
     const workerBar = new Worker(new URL('../Utils/VisualizationUtil', import.meta.url));
