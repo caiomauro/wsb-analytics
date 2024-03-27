@@ -1,5 +1,4 @@
 import { Suspense, lazy, useEffect, useState } from "react";
-import { TickerTape } from "react-ts-tradingview-widgets";
 import BottomHeader from "../Components/BottomHeader";
 import Navbar from "../Components/Navbar";
 import { fetchData, fetchDataRange, fetchLimitStockMentions } from "../Services/ServerApi";
@@ -98,11 +97,6 @@ const symbols = [
         id="analytics-container"
         className="flex flex-col h-max w-full items-center overflow-y-auto gap-2 pt-8"
       >
-        <TickerTape
-          colorTheme="dark"
-          symbols={symbols}
-          isTransparent={true}
-        ></TickerTape>
         <h1>Sentiment Analysis</h1>
         <div
           id="count-button-container"
