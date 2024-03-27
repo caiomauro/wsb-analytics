@@ -80,16 +80,6 @@ function AnalyticsPage() {
     color: string
 }
 
-const symbols = [
-  { proName: "NASDAQ:NVDA", title: "NVDA" },
-  { proName: "AMEX:SPY", title: "SPY" },
-  { proName: "NASDAQ:TSLA", title: "TSLA" },
-  { proName: "NASDAQ:AMD", title: "AMD" },
-  { proName: "NYSE:TSM", title: "TSM" },
-  { proName: "NYSE:PATH", title: "PATH" },
-  { proName: "NYSE:RDDT", title: "RDDT" }
-];
-
   return (
     <div className="flex flex-col w-full h-full custom-background-img-mobile sm:custom-background-img-desktop">
       <Navbar />
