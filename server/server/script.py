@@ -33,7 +33,7 @@ def get_data():
     post_analysis = []
 
     #Number of posts to pull
-    scraped_posts = 500
+    scraped_posts = 2000
 
     #Filter keywords
     buy_keywords = [
