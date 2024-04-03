@@ -50,35 +50,28 @@ function AnalyticsPage() {
 
     setLoadingText("Processing main data")
 
-    fetchData(10000, 10).then(({ sortedStocks, stockSentiments, entries }) => {
-      setAllStocks(sortedStocks);
-      //setData(visualization(stockSentiments, entries));
-      workerBar.postMessage({ data: stockSentiments, entries });
-    });
-
-    setLoadingText("Processing pie chart data")
-
-    fetchLimitStockMentions(10).then(( limitStockMentions ) => {
-      //setPieData(visualizationPieChart(limitStockMentions.limitStockMentions.reverse()));
-      workerPie.postMessage({data: limitStockMentions.limitStockMentions.reverse()});
-    })
-
-    setLoadingText("Processing range data")
-
-    fetchDataRange("NVDA",getPreviousWeekStartDate(), 1).then(({ stockSentiments, days, stock }) => {
-      //setRangeData(visualizationTimeline(stock, stockSentiments, days));
-      workerBarTimeline.postMessage({ data: stockSentiments, days, stock });
-    })
-    .catch((error) => {
+    Promise.all([
+      fetchData(10000, 10).then(({ sortedStocks, stockSentiments, entries }) => {
+        setAllStocks(sortedStocks);
+        workerBar.postMessage({ data: stockSentiments, entries });
+      }),
+      fetchLimitStockMentions(10).then((limitStockMentions) => {
+        workerPie.postMessage({ data: limitStockMentions.limitStockMentions.reverse() });
+      }),
+      fetchDataRange("NVDA", getPreviousWeekStartDate(), 1).then(({ stockSentiments, days, stock }) => {
+        workerBarTimeline.postMessage({ data: stockSentiments, days, stock });
+      })
+    ]).then(() => {
+      setLoadingText("Enjoy!");
+      setLoading(false);
+    }).catch((error) => {
       console.error("Error fetching data:", error);
+      setLoading(false); // Set loading to false in case of error
     });
     
     handleResize();
 
     window.addEventListener("resize", handleResize);
-
-    setLoadingText("Enjoy!")
-    setLoading(false);
 
     return () => {
       window.removeEventListener("resize", handleResize);
